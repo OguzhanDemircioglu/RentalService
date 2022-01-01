@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="69539926-1986-49c5-826e-047d55f52a0a" name="Changes" comment="ReCapProject">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RentACarSpring.iml" beforeDir="false" afterPath="$PROJECT_DIR$/RentACarSpring.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/RentACarSpringProjectApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/RentACarSpringProjectApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/AdditionalServiceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/forRent/AdditionalServiceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/forUser/AuthenticationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/BrandService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/forCar/BrandService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/CarDamageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/forCar/CarDamageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/CarImageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/forCar/CarImageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/CarService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/forCar/CarService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/ColorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/forCar/ColorService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/CorporateCustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/forUser/CorporateCustomerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/CreditCardService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/forRent/CreditCardService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/FakePosService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/core/fakeServices/FakePosService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/FindeksScoreService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/core/fakeServices/FindeksScoreService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/IndividualCustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/forUser/IndividualCustomerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/InvoiceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/forRent/InvoiceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/RentalService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/forRent/RentalService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/RepairService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/forCar/RepairService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/abstracts/forUser/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/AdditionalServiceManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/forRent/AdditionalServiceManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/AuthenticationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/forUser/AuthenticationManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/BrandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/forCar/BrandManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/CarDamageManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/forCar/CarDamageManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/CarImageManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/forCar/CarImageManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/CarManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/forCar/CarManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/ColorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/forCar/ColorManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/CorporateCustomerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/forUser/CorporateCustomerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/CreditCardManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/forRent/CreditCardManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/FakePosAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/core/adapters/FakePosAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/FindeksServiceAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/core/adapters/FindeksServiceAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/IndividualCustomerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/forUser/IndividualCustomerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/InvoiceManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/forRent/InvoiceManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/RentalManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/forRent/RentalManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/RepairManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/forCar/RepairManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/UserManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/concretes/forUser/UserManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/AdditionalServiceDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/forRent/AdditionalServiceDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/ApplicationUserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/forUser/ApplicationUserDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/BrandDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/forCar/BrandDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/CarDamageDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/forCar/CarDamageDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/CarDetailWithImagesDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/forCar/CarDetailWithImagesDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/CarDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/forCar/CarDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/CarImageDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/forCar/CarImageDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/CarSearchListDetailDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/entities/complexTypies/CarwithBrandandColorDetail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/ColorDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/forCar/ColorDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/CorporateCustomerDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/forUser/CorporateCustomerDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/CreditCardDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/forRent/CreditCardDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/IndividualCustomerDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/forUser/IndividualCustomerDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/InvoiceDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/forRent/InvoiceDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/RentalDetailDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/forRent/RentalDetailDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/RentalDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/forRent/RentalDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/RepairDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/dtos/forCar/RepairDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/requests/authenticationRequests/CreateIndividualCustomerRegisterRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/requests/authenticationRequests/CreateIndividualCustomerRegisterRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/requests/carRequest/CreateCarRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/requests/carRequest/CreateCarRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/requests/carRequest/UpdateCarRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/requests/carRequest/UpdateCarRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/requests/corporateCustomerRequest/CreateCorporateCustomerRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/requests/corporateCustomerRequest/CreateCorporateCustomerRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/requests/corporateCustomerRequest/UpdateCorporateCustomerRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/requests/corporateCustomerRequest/UpdateCorporateCustomerRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/requests/creditCardRequest/CreateCreditCardRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/requests/creditCardRequest/CreateCreditCardRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/requests/creditCardRequest/DeleteCreditCardRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/requests/creditCardRequest/DeleteCreditCardRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/requests/individualCustomerRequest/CreateIndividualCustomerRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/requests/individualCustomerRequest/CreateIndividualCustomerRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/requests/individualCustomerRequest/UpdateIndividualCustomerRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/requests/individualCustomerRequest/UpdateIndividualCustomerRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/requests/rentalRequest/CreateRentalRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/requests/rentalRequest/CreateRentalRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/requests/rentalRequest/UpdateRentalRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/requests/rentalRequest/UpdateRentalRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/requests/repairRequest/CreateRepairRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/requests/repairRequest/CreateRepairRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/core/concretes/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/entities/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/core/webServices/FindeksService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/core/webServices/FindeksService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/core/webServices/PosService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/core/webServices/PosService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/dataAccess/abstracts/AdditionalServiceDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/dataAccess/abstracts/ApplicationUserDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/dataAccess/abstracts/BrandDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/dataAccess/abstracts/CarDamageDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/dataAccess/abstracts/CarDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/dataAccess/abstracts/CarImageDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/dataAccess/abstracts/ColorDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/dataAccess/abstracts/CorporateCustomerDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/dataAccess/abstracts/CreditCardDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/dataAccess/abstracts/IndividualCustomerDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/dataAccess/abstracts/InvoiceDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/dataAccess/abstracts/RentalDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/dataAccess/abstracts/RepairDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/entities/ApplicationUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/entities/ApplicationUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/entities/Car.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/entities/Car.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/entities/CorporateCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/entities/CorporateCustomer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/entities/IndividualCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/entities/IndividualCustomer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/entities/Rental.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/entities/Rental.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/AdditionalServiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/forRent/AdditionalServiceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/forUser/AuthenticationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/BrandController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/forCar/BrandController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/CarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/forCar/CarController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/CarDamageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/forCar/CarDamageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/CarImageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/forCar/CarImageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/ColorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/forCar/ColorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/CorporateCustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/forUser/CorporateCustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/CreditCardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/forRent/CreditCardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/IndividualCustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/forUser/IndividualCustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/InvoiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/forRent/InvoiceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/RentalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/forRent/RentalController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/RepairController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/forCar/RepairController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/ws/forUser/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--tags" />
+        <option name="title" value="All" />
+      </GitPushTagMode>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="myId2FirstActivated">
+      <map>
+        <entry key="JPA Inspector" value="true" />
+        <entry key="JPA Palette" value="true" />
+        <entry key="JPA Structure" value="true" />
+        <entry key="com.haulmont.jpb.jpaInspector" value="true" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="true" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="true" />
+      </map>
+    </option>
+    <option name="myId2Visible">
+      <map>
+        <entry key="JPA Inspector" value="false" />
+        <entry key="JPA Palette" value="false" />
+        <entry key="JPA Structure" value="false" />
+        <entry key="com.haulmont.jpb.jpaInspector" value="false" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="false" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="true" />
+      </map>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="21k3XCZ5KI7B2rTIyGD5BNrBuwA" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ChangesTree.GroupingKeys" value="directory" />
+    <property name="DatabaseDriversLRU" value="postgresql" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\oguzhan.demircioglu\Desktop\Yeni klasör\ReCapProject\RentACarSpringProject\src\main\java\com\etiya\RentACarSpringProject\dataAccess" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\oguzhan.demircioglu\Desktop\Yeni klasör\ReCapProject\RentACarSpringProject\src\main\java\images" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.etiya.RentACarSpringProject.business.requests.cityRequest" />
+      <recent name="com.etiya.RentACarSpringProject.business.concretes.forRent" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="RentACarSpringProjectApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="RentACarSpring" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.etiya.RentACarSpringProject.RentACarSpringProjectApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="69539926-1986-49c5-826e-047d55f52a0a" name="Changes" comment="" />
+      <created>1638471294743</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1638471294743</updated>
+      <workItem from="1638471296947" duration="1430000" />
+      <workItem from="1638517046653" duration="2470000" />
+      <workItem from="1638533701819" duration="522000" />
+      <workItem from="1638614732872" duration="5462000" />
+      <workItem from="1638706120954" duration="30000" />
+      <workItem from="1638706185430" duration="1664000" />
+      <workItem from="1638708246631" duration="17000" />
+      <workItem from="1638714714689" duration="5175000" />
+      <workItem from="1638725088591" duration="945000" />
+      <workItem from="1638726061934" duration="11733000" />
+      <workItem from="1638804691442" duration="12297000" />
+      <workItem from="1638875913544" duration="8792000" />
+      <workItem from="1638887191896" duration="3634000" />
+      <workItem from="1638961715205" duration="5652000" />
+      <workItem from="1639121599510" duration="689000" />
+      <workItem from="1639150467908" duration="49000" />
+      <workItem from="1639150568598" duration="9000" />
+      <workItem from="1639213313999" duration="4130000" />
+      <workItem from="1639233581267" duration="8338000" />
+      <workItem from="1639296218070" duration="4908000" />
+      <workItem from="1639382462289" duration="75000" />
+      <workItem from="1639382736892" duration="3793000" />
+      <workItem from="1639415071579" duration="4627000" />
+      <workItem from="1639419785233" duration="75000" />
+      <workItem from="1639485964498" duration="2252000" />
+      <workItem from="1639512786559" duration="2099000" />
+      <workItem from="1639566668371" duration="696000" />
+      <workItem from="1639569583609" duration="762000" />
+      <workItem from="1639742781392" duration="1217000" />
+      <workItem from="1639773853599" duration="2164000" />
+      <workItem from="1639820209318" duration="5837000" />
+      <workItem from="1639904445868" duration="5639000" />
+      <workItem from="1640077399405" duration="689000" />
+      <workItem from="1640086252538" duration="3222000" />
+      <workItem from="1640454882731" duration="7787000" />
+      <workItem from="1640586665821" duration="14267000" />
+      <workItem from="1640613207594" duration="4062000" />
+      <workItem from="1640627505659" duration="6396000" />
+      <workItem from="1640671398221" duration="4737000" />
+      <workItem from="1640805215428" duration="6711000" />
+      <workItem from="1640817742337" duration="1162000" />
+      <workItem from="1640819000549" duration="361000" />
+      <workItem from="1640837089267" duration="1378000" />
+      <workItem from="1640838541908" duration="26000" />
+      <workItem from="1640838748974" duration="1456000" />
+      <workItem from="1640842078074" duration="634000" />
+      <workItem from="1640842752714" duration="52000" />
+      <workItem from="1640842834094" duration="25000" />
+      <workItem from="1640843332909" duration="2021000" />
+      <workItem from="1640848615467" duration="14762000" />
+      <workItem from="1640864953667" duration="4000" />
+      <workItem from="1640869429074" duration="1710000" />
+      <workItem from="1640895150581" duration="330000" />
+      <workItem from="1640895549604" duration="284000" />
+      <workItem from="1640896026568" duration="12000" />
+      <workItem from="1640934781759" duration="8088000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="java:jakarta.persistence:jakarta.persistence-api" />
+    <option featureType="dependencySupport" implementationName="java:org.hibernate:hibernate-core" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="ReCapProject" />
+    <option name="LAST_COMMIT_MESSAGE" value="ReCapProject" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/etiya/RentACarSpringProject/business/requests/cityRequest/CreateCityRequest.java</url>
+          <line>12</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
