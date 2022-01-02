@@ -6,10 +6,12 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import com.etiya.RentACarSpringProject.business.abstracts.forUser.UserService;
+import com.etiya.RentACarSpringProject.business.abstracts.languages.LanguageWordService;
 import com.etiya.RentACarSpringProject.business.constants.Messages;
 import com.etiya.RentACarSpringProject.core.results.*;
 import com.etiya.RentACarSpringProject.dataAccess.forRent.CreditCardDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.etiya.RentACarSpringProject.business.abstracts.forRent.CreditCardService;
@@ -27,18 +29,24 @@ public class CreditCardManager implements CreditCardService {
 	private CreditCardDao creditCardDao;
 	private ModelMapperService modelMapperService;
 	private UserService userService;
+	private Environment environment;
+	private LanguageWordService languageWordService;
+	
 	@Autowired
-	public CreditCardManager(CreditCardDao creditCardDao,UserService userService, ModelMapperService modelMapperService) {
+	public CreditCardManager(CreditCardDao creditCardDao,UserService userService, ModelMapperService modelMapperService,  Environment environment, LanguageWordService languageWordService) {
 		super();
 		this.creditCardDao = creditCardDao;
 		this.modelMapperService = modelMapperService;
 		this.userService = userService;
+		this.environment=environment;
+		this.languageWordService=languageWordService;
 	}
 
 	@Override
 	public DataResult<List<CreditCard>> findAll() {
 
-		return new SuccessDataResult<List<CreditCard>>(this.creditCardDao.findAll(), Messages.CreditCardsListed);
+        return new SuccessDataResult<List<CreditCard>>(this.creditCardDao.findAll(),languageWordService.getByLanguageAndKeyId(Messages.CreditCardsListed,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -48,7 +56,8 @@ public class CreditCardManager implements CreditCardService {
 		List<CreditCardDto> creditCardsDto = creditCards.stream()
 				.map(creditCard -> modelMapperService.forDto().map(creditCard, CreditCardDto.class))
 				.collect(Collectors.toList());
-		return new SuccessDataResult<List<CreditCardDto>>(creditCardsDto, Messages.CreditCardsListed);
+        return new SuccessDataResult<List<CreditCardDto>>(creditCardsDto,languageWordService.getByLanguageAndKeyId(Messages.CreditCardsListed,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -60,7 +69,8 @@ public class CreditCardManager implements CreditCardService {
 			return  new ErrorDataResult(result);
 		}
 
-		return new SuccessDataResult<CreditCard>(this.creditCardDao.getById(creditCardId), Messages.GetCreditCard);
+        return new SuccessDataResult<CreditCard>(this.creditCardDao.getById(creditCardId),languageWordService.getByLanguageAndKeyId(Messages.GetCreditCard,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -73,8 +83,9 @@ public class CreditCardManager implements CreditCardService {
 		}
 
 		CreditCard creditCard = this.creditCardDao.getById(creditCardId);
-		return new SuccessDataResult<CreditCardDto>(modelMapperService.forDto().map(creditCard, CreditCardDto.class),
-				Messages.GetCreditCard);
+        return new SuccessDataResult<CreditCardDto>(modelMapperService.forDto().map(creditCard, CreditCardDto.class),languageWordService
+        		.getByLanguageAndKeyId(Messages.GetCreditCard,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -85,10 +96,9 @@ public class CreditCardManager implements CreditCardService {
 		if(result!=null){
 			return  new ErrorDataResult(result);
 		}
+        return new SuccessDataResult<List<CreditCard>>(this.creditCardDao.getCreditCardByApplicationUser_UserId(applicationUserId),languageWordService
+        		.getByLanguageAndKeyId(Messages.CreditCardsOfCustomerListed,Integer.parseInt(environment.getProperty("language"))));
 
-		return new SuccessDataResult<List<CreditCard>>(
-				this.creditCardDao.getCreditCardByApplicationUser_UserId(applicationUserId),
-				Messages.CreditCardsOfCustomerListed);
 	}
 
 	@Override
@@ -107,7 +117,8 @@ public class CreditCardManager implements CreditCardService {
 						.map(creditCard, CreditCardDto.class))
 					.collect(Collectors.toList());
 
-		return new SuccessDataResult<List<CreditCardDto>>(creditCardsDto, Messages.CreditCardsOfCustomerListed);
+        return new SuccessDataResult<List<CreditCardDto>>(creditCardsDto,languageWordService.getByLanguageAndKeyId(Messages.CreditCardsOfCustomerListed,Integer.parseInt(environment.getProperty("language"))));
+
 
 	}
 
@@ -126,7 +137,8 @@ public class CreditCardManager implements CreditCardService {
 		CreditCard creditCard = modelMapperService.forRequest().map(createCreditCardRequest, CreditCard.class);
 
 		this.creditCardDao.save(creditCard);
-		return new SuccessResult(Messages.CreditCardAdded);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.CreditCardAdded,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -145,7 +157,8 @@ public class CreditCardManager implements CreditCardService {
 		CreditCard creditCard = modelMapperService.forDto().map(updateCreditCardRequest, CreditCard.class);
 
 		this.creditCardDao.save(creditCard);
-		return new SuccessResult(Messages.CreditCardUpdated);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.CreditCardUpdated,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -164,7 +177,8 @@ public class CreditCardManager implements CreditCardService {
 
 		CreditCard creditCard = creditCardDao.getById(deleteCreditCardRequest.getCreditCardId());
 		this.creditCardDao.delete(creditCard);
-		return new SuccessResult(Messages.CreditCardDeleted);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.CreditCardDeleted,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	public Result checkCreditCardNumber(String cardNumber) {
@@ -172,7 +186,8 @@ public class CreditCardManager implements CreditCardService {
 		Pattern pattern = Pattern.compile(regex);
 		java.util.regex.Matcher matcher = pattern.matcher(cardNumber);
 		if (!matcher.matches()) {
-			return new ErrorResult(Messages.InvalidCreditCardNumber);
+	        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.InvalidCreditCardNumber,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 		return new SuccessResult();
 	}
@@ -185,7 +200,8 @@ public class CreditCardManager implements CreditCardService {
 		Matcher matcher = pattern.matcher(cvv);
 
 		if (!matcher.matches()) {
-			return new ErrorResult(Messages.InvalidCreditCardCVVNumber);
+	        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.InvalidCreditCardCVVNumber,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 		return new SuccessResult();
 	}
@@ -199,7 +215,8 @@ public class CreditCardManager implements CreditCardService {
 		Matcher matcher = pattern.matcher(expiryDate);
 
 		if (!matcher.matches()) {
-			return new ErrorResult(Messages.InvalidCreditExpireDate);
+	        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.InvalidCreditExpireDate,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 		return new SuccessResult();
 	}
@@ -208,7 +225,8 @@ public class CreditCardManager implements CreditCardService {
 
 		var result=this.creditCardDao.existsById(creditCardId);
 		if (!result){
-			return new ErrorResult(Messages.NoCreditCard);
+	        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.NoCreditCard,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 		return new SuccessResult();
 	}

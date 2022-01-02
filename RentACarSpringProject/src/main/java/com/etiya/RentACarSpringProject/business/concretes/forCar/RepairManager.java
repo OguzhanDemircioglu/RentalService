@@ -13,15 +13,18 @@ import com.etiya.RentACarSpringProject.core.business.BusinessRules;
 import com.etiya.RentACarSpringProject.core.results.*;
 import com.etiya.RentACarSpringProject.dataAccess.forCar.RepairDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.etiya.RentACarSpringProject.business.abstracts.forCar.CarService;
 import com.etiya.RentACarSpringProject.business.abstracts.forCar.RepairService;
+import com.etiya.RentACarSpringProject.business.abstracts.languages.LanguageWordService;
 import com.etiya.RentACarSpringProject.business.dtos.forCar.RepairDto;
 import com.etiya.RentACarSpringProject.business.requests.repairRequest.CreateRepairRequest;
 import com.etiya.RentACarSpringProject.business.requests.repairRequest.DeleteRepairRequest;
 import com.etiya.RentACarSpringProject.business.requests.repairRequest.UpdateRepairRequest;
 import com.etiya.RentACarSpringProject.core.mapping.ModelMapperService;
+import com.etiya.RentACarSpringProject.entities.Color;
 import com.etiya.RentACarSpringProject.entities.Repair;
 
 
@@ -32,18 +35,23 @@ public class RepairManager implements RepairService {
 
 	private CarService carService;
 	private ModelMapperService modelMapperService;
+	private Environment environment;
+	private LanguageWordService languageWordService;
 
 	@Autowired
-	public RepairManager(RepairDao repairDao, CarService carService, ModelMapperService modelMapperService) {
+	public RepairManager(RepairDao repairDao, CarService carService, ModelMapperService modelMapperService, Environment environment, LanguageWordService languageWordService) {
 		super();
 		this.repairDao = repairDao;
 		this.carService = carService;
 		this.modelMapperService = modelMapperService;
+		this.environment=environment;
+		this.languageWordService=languageWordService;
 	}
 
 	@Override
 	public DataResult<List<Repair>> findAll() {
-		return new SuccessDataResult<List<Repair>>(this.repairDao.findAll(), Messages.RepairsListed);
+        return new SuccessDataResult<List<Repair>>(this.repairDao.findAll(),languageWordService.getByLanguageAndKeyId(Messages.RepairsListed,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -57,7 +65,8 @@ public class RepairManager implements RepairService {
 			repairsDto.add(mappedRepairDto);
 		}		
 
-		return new SuccessDataResult<List<RepairDto>>(repairsDto, Messages.RepairsListed);
+        return new SuccessDataResult<List<RepairDto>>(repairsDto,languageWordService.getByLanguageAndKeyId(Messages.RepairsListed,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -70,7 +79,8 @@ public class RepairManager implements RepairService {
 		Repair repair = modelMapperService.forRequest().map(createRepairRequest, Repair.class);
 		this.setInRepairIfFinishDateIsNull(createRepairRequest.getCarId(), createRepairRequest.getRepairFinishDate());
 		this.repairDao.save(repair);
-		return new SuccessResult(Messages.RepairAdded);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.RepairAdded,Integer.parseInt(environment.getProperty("language"))));
+
 
 	}
 
@@ -89,7 +99,8 @@ public class RepairManager implements RepairService {
 
 		this.setInRepairIfFinishDateIsNull(updateRepairRequest.getCarId(), updateRepairRequest.getRepairFinishDate());
 		this.repairDao.save(repair);
-		return new SuccessResult(Messages.RepairUpdated);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.RepairUpdated,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -102,7 +113,8 @@ public class RepairManager implements RepairService {
 		}
 
 		this.repairDao.delete(this.repairDao.getById(deleteRepairRequest.getRepairId()));
-		return new SuccessResult(Messages.RepairDeleted);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.RepairDeleted,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	private Result setInRepairIfFinishDateIsNull(int carId, String repairFinishDate) {
@@ -133,7 +145,8 @@ public class RepairManager implements RepairService {
 	private Result  checkIfRepairIdExists(int repairId){
 		var result=this.repairDao.existsById(repairId);
 		if (!result){
-			return new ErrorResult(Messages.NoRepair);
+	        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.NoRepair,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 		return new SuccessResult();
 	}
@@ -149,7 +162,8 @@ public class RepairManager implements RepairService {
 		Matcher matcher = pattern.matcher(startDate);
 
 		if (!matcher.matches()) {
-			return new ErrorResult(Messages.RepairsStartDateIsFalse);
+	        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.RepairsStartDateIsFalse,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 		return new SuccessResult();
 	}
@@ -162,7 +176,8 @@ public class RepairManager implements RepairService {
 		Matcher matcher = pattern.matcher(returnDate);
 
 		if (!matcher.matches()) {
-			return new ErrorResult(Messages.RepairsFinishDateIsFalse);
+	        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.RepairsFinishDateIsFalse,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 		return new SuccessResult();
 	}

@@ -8,14 +8,17 @@ import com.etiya.RentACarSpringProject.core.business.BusinessRules;
 import com.etiya.RentACarSpringProject.core.results.*;
 import com.etiya.RentACarSpringProject.dataAccess.forCar.CarDamageDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.etiya.RentACarSpringProject.business.abstracts.forCar.CarDamageService;
+import com.etiya.RentACarSpringProject.business.abstracts.languages.LanguageWordService;
 import com.etiya.RentACarSpringProject.business.dtos.forCar.CarDamageDto;
 import com.etiya.RentACarSpringProject.business.requests.carDamageRequest.CreateCarDamageRequest;
 import com.etiya.RentACarSpringProject.business.requests.carDamageRequest.DeleteCarDamageRequest;
 import com.etiya.RentACarSpringProject.business.requests.carDamageRequest.UpdateCarDamageRequest;
 import com.etiya.RentACarSpringProject.core.mapping.ModelMapperService;
+import com.etiya.RentACarSpringProject.entities.Brand;
 import com.etiya.RentACarSpringProject.entities.CarDamage;
 
 @Service
@@ -23,19 +26,24 @@ public class CarDamageManager implements CarDamageService {
 
 	private CarDamageDao carDamageDao;
 	private ModelMapperService modelMapperService;
+	private Environment environment;
+	private LanguageWordService languageWordService;
 	
 	@Autowired
-	public CarDamageManager(CarDamageDao carDamageDao, ModelMapperService modelMapperService) {
+	public CarDamageManager(CarDamageDao carDamageDao, ModelMapperService modelMapperService,  Environment environment, LanguageWordService languageWordService) {
 		super();
 		this.carDamageDao = carDamageDao;
 		this.modelMapperService = modelMapperService;
+		this.environment = environment;
+		this.languageWordService = languageWordService;
+	
 	}
 
 	@Override
 	public DataResult<List<CarDamage>> findAll() {
 
-		return new SuccessDataResult<List<CarDamage>>(this.carDamageDao.findAll(),
-				Messages.DamageRecordsListed);
+        return new SuccessDataResult<List<CarDamage>>(this.carDamageDao.findAll(),languageWordService.getByLanguageAndKeyId(Messages.DamageRecordsListed,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 	
 	@Override
@@ -48,7 +56,8 @@ public class CarDamageManager implements CarDamageService {
 						.map(carDamage, CarDamageDto.class))
 								.collect(Collectors.toList());
 		
-		return new SuccessDataResult<List<CarDamageDto>>(carDamagesDto, Messages.DamageRecordsListed);
+        return new SuccessDataResult<List<CarDamageDto>>(carDamagesDto, languageWordService.getByLanguageAndKeyId(Messages.DamageRecordsListed,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -61,8 +70,8 @@ public class CarDamageManager implements CarDamageService {
 		}
 
 
-		return new SuccessDataResult<List<CarDamage>>(this.carDamageDao.getByCar_CarId(carId),
-				Messages.GetDamageRecordByCarId);
+        return new SuccessDataResult<List<CarDamage>>(this.carDamageDao.getByCar_CarId(carId), languageWordService.getByLanguageAndKeyId(Messages.GetDamageRecordByCarId,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 	
 	@Override
@@ -79,7 +88,8 @@ public class CarDamageManager implements CarDamageService {
 						.map(carDamage, CarDamageDto.class))
 								.collect(Collectors.toList());
 		
-		return new SuccessDataResult<List<CarDamageDto>>(carDamagesDto, Messages.GetDamageRecordByCarId);
+        return new SuccessDataResult<List<CarDamageDto>>(carDamagesDto, languageWordService.getByLanguageAndKeyId(Messages.GetDamageRecordByCarId,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -89,7 +99,8 @@ public class CarDamageManager implements CarDamageService {
 		CarDamage carDamage = modelMapperService.forDto().map(createCarDamageRequest, CarDamage.class);
 		
 		this.carDamageDao.save(carDamage);
-		return new SuccessResult(Messages.DamageRecordAdded);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.DamageRecordAdded,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -106,7 +117,8 @@ public class CarDamageManager implements CarDamageService {
 				.map(updateCarDamageRequest, CarDamage.class);
 
 		this.carDamageDao.save(carDamage);
-		return new SuccessResult(Messages.DamageRecordUpdated);
+		        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.DamageRecordUpdated,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -122,14 +134,16 @@ public class CarDamageManager implements CarDamageService {
 		CarDamage carDamage = this.carDamageDao.getById(deleteCarDamageRequest.getCarDamageId());
 
 		this.carDamageDao.delete(carDamage);
-		return new SuccessResult(Messages.DamageRecordDeleted);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.DamageRecordDeleted,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	private Result  checkIfCarDamageIdExists(int damageId){
 
 		var result=this.carDamageDao.existsById(damageId);
 		if (!result){
-			return new ErrorResult(Messages.NoDamage);
+	        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.NoDamage,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 		return new SuccessResult();
 	}
@@ -138,7 +152,8 @@ public class CarDamageManager implements CarDamageService {
 
 		var result=this.carDamageDao.existsById(carId);
 		if (!result){
-			return new ErrorResult(Messages.NoCar);
+	        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.NoCar,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 		return new SuccessResult();
 	}

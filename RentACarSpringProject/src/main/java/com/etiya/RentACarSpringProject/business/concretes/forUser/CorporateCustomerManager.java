@@ -8,9 +8,11 @@ import com.etiya.RentACarSpringProject.core.business.BusinessRules;
 import com.etiya.RentACarSpringProject.core.results.*;
 import com.etiya.RentACarSpringProject.dataAccess.forUser.CorporateCustomerDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.etiya.RentACarSpringProject.business.abstracts.forUser.CorporateCustomerService;
+import com.etiya.RentACarSpringProject.business.abstracts.languages.LanguageWordService;
 import com.etiya.RentACarSpringProject.business.dtos.forUser.CorporateCustomerDto;
 import com.etiya.RentACarSpringProject.business.requests.corporateCustomerRequest.CreateCorporateCustomerRequest;
 import com.etiya.RentACarSpringProject.business.requests.corporateCustomerRequest.DeleteCorporateCustomerRequest;
@@ -23,18 +25,23 @@ public class CorporateCustomerManager implements CorporateCustomerService {
 
 	private CorporateCustomerDao corporateCustomerDao;
 	private ModelMapperService modelMapperService;
+	private Environment environment;
+	private LanguageWordService languageWordService;
 
 	@Autowired
 	public CorporateCustomerManager(CorporateCustomerDao corporateCustomerDao,
-									ModelMapperService modelMapperService) {
+									ModelMapperService modelMapperService, Environment environment, LanguageWordService languageWordService) {
 		super();
 		this.corporateCustomerDao = corporateCustomerDao;
 		this.modelMapperService = modelMapperService;
+		this.environment=environment;
+		this.languageWordService=languageWordService;
 	}
 
 	@Override
 	public DataResult<List<CorporateCustomer>> findAll() {
-		return new SuccessDataResult<List<CorporateCustomer>>(this.corporateCustomerDao.findAll(), Messages.CorporateCustomerListed);
+        return new SuccessDataResult<List<CorporateCustomer>>(this.corporateCustomerDao.findAll(),languageWordService.getByLanguageAndKeyId(Messages.CorporateCustomerListed,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -48,7 +55,8 @@ public class CorporateCustomerManager implements CorporateCustomerService {
 
 			corporateCustomersDto.add(mappedCorporateCustomer);
 		}
-		return new SuccessDataResult<List<CorporateCustomerDto>>(corporateCustomersDto, Messages.CorporateCustomerListed);
+        return new SuccessDataResult<List<CorporateCustomerDto>>(corporateCustomersDto,languageWordService.getByLanguageAndKeyId(Messages.CorporateCustomerListed,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -58,7 +66,8 @@ public class CorporateCustomerManager implements CorporateCustomerService {
 		if(result!=null){
 			return  new ErrorDataResult(result);
 		}
-		return new SuccessDataResult<CorporateCustomer>(this.corporateCustomerDao.getById(corporateCustomerId), Messages.GetCorporateCustomer);
+        return new SuccessDataResult<CorporateCustomer>(this.corporateCustomerDao.getById(corporateCustomerId),languageWordService.getByLanguageAndKeyId(Messages.GetCorporateCustomer,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -71,7 +80,8 @@ public class CorporateCustomerManager implements CorporateCustomerService {
 		CorporateCustomerDto mappedCorporateCustomer = modelMapperService.forDto()
 				.map(this.corporateCustomerDao.getById(corporateCustomerId), CorporateCustomerDto.class);
 
-		return new SuccessDataResult<CorporateCustomerDto>(mappedCorporateCustomer, Messages.GetCorporateCustomer);
+        return new SuccessDataResult<CorporateCustomerDto>(mappedCorporateCustomer,languageWordService.getByLanguageAndKeyId(Messages.GetCorporateCustomer,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -80,7 +90,8 @@ public class CorporateCustomerManager implements CorporateCustomerService {
 		CorporateCustomer corporateCustomer = modelMapperService.forDto().map(createCorporateCustomerRequest, CorporateCustomer.class);
 
 		this.corporateCustomerDao.save(corporateCustomer);
-		return new SuccessResult(Messages.CustomerAdded);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.CustomerAdded,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -96,7 +107,8 @@ public class CorporateCustomerManager implements CorporateCustomerService {
 		CorporateCustomer corporateCustomer = modelMapperService.forDto().map(updateCorporateCustomerRequest, CorporateCustomer.class);
 
 		this.corporateCustomerDao.save(corporateCustomer);
-		return new SuccessResult(Messages.CustomerUpdated);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.CustomerUpdated,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -112,7 +124,8 @@ public class CorporateCustomerManager implements CorporateCustomerService {
 				.getById(deleteCorporateCustomerRequest.getCorporateCustomerId());
 
 		this.corporateCustomerDao.delete(corporateCustomer);
-		return new SuccessResult(Messages.CustomerDeleted);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.CustomerDeleted,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -146,7 +159,8 @@ public class CorporateCustomerManager implements CorporateCustomerService {
 
 		var result=this.corporateCustomerDao.existsById(corporateCustomerId);
 		if (!result){
-			return new ErrorResult(Messages.NoCorporateCustomer);
+	        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.NoCorporateCustomer,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 		return new SuccessResult();
 	}

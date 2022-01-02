@@ -1,6 +1,8 @@
 package com.etiya.RentACarSpringProject.business.concretes.languages;
 
+import com.etiya.RentACarSpringProject.business.abstracts.languages.LanguageService;
 import com.etiya.RentACarSpringProject.business.abstracts.languages.LanguageWordService;
+import com.etiya.RentACarSpringProject.business.abstracts.languages.WordService;
 import com.etiya.RentACarSpringProject.business.dtos.languages.LanguageWordDto;
 import com.etiya.RentACarSpringProject.business.requests.languages.LanguageWord.CreateLanguageWordRequest;
 import com.etiya.RentACarSpringProject.business.requests.languages.LanguageWord.DeleteLanguageWordRequest;
@@ -13,21 +15,36 @@ import com.etiya.RentACarSpringProject.core.results.SuccessResult;
 import com.etiya.RentACarSpringProject.dataAccess.languages.LanguageWordDao;
 import com.etiya.RentACarSpringProject.entities.languages.LanguageWord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class LanguageWordManager implements LanguageWordService {
+	
+	  	@Value("${language}")
+	    private Integer languageId; 
+	  	@Value("${defaultLanguage}")
+	    private Integer defaultLanguageId;
+	
+	    
     private LanguageWordDao languageWordDao;
     private ModelMapperService modelMapperService;
+    private WordService wordService;
+    private Environment environment;
+    private LanguageService languageService;
 
     @Autowired
-    public LanguageWordManager(LanguageWordDao languageWordDao, ModelMapperService modelMapperService) {
+    public LanguageWordManager(LanguageWordDao languageWordDao, ModelMapperService modelMapperService, WordService wordService, Environment environment, LanguageService languageService) {
+    	
         this.languageWordDao = languageWordDao;
         this.modelMapperService=modelMapperService;
+        this.wordService=wordService;
+        this.environment=environment;
+        this.languageService=languageService;
     }
 
     @Override
@@ -40,7 +57,7 @@ public class LanguageWordManager implements LanguageWordService {
     }
 
     @Override
-    public Result save(@Valid CreateLanguageWordRequest createLanguageRequest) {
+    public Result save(CreateLanguageWordRequest createLanguageRequest) {
 
         LanguageWord languageWord = modelMapperService.forRequest()
             .map(createLanguageRequest, LanguageWord.class);
@@ -49,7 +66,7 @@ public class LanguageWordManager implements LanguageWordService {
     }
 
     @Override
-    public Result update(@Valid UpdateLanguageWordRequest updateLanguageRequest) {
+    public Result update(UpdateLanguageWordRequest updateLanguageRequest) {
 
         LanguageWord languageWord = modelMapperService.forRequest()
                 .map(updateLanguageRequest, LanguageWord.class);
@@ -58,13 +75,27 @@ public class LanguageWordManager implements LanguageWordService {
     }
 
     @Override
-    public Result delete(@Valid DeleteLanguageWordRequest deleteLanguageRequest) {
+    public Result delete(DeleteLanguageWordRequest deleteLanguageRequest) {
         this.languageWordDao.deleteById(deleteLanguageRequest.getId());
         return new SuccessResult();
     }
 
     @Override
-    public String getByLanguageAndKeyId(int wordId, int language) {
-        return this.languageWordDao.getMessageByLanguageIdAndKey(wordId, language);
+    public String getByLanguageAndKeyId(String key, int language) {
+        //getDefaultLanguage();
+        String messageContent=this.languageWordDao.getMessageByLanguageIdAndKey(key,this.languageId);
+        if (!wordService.checkKeyExists(key).isSuccess()){
+            return key;
+        }
+        if (messageContent!=null){
+            return messageContent;
+        }
+        return this.languageWordDao.getMessageByLanguageIdAndKey(key, language);
     }
+
+    /*private void getDefaultLanguage(){
+        if(!this.languageService.checkLanguageExists(this.languageId).isSuccess()){
+            this.languageId=this.defaultLanguageId;
+        }
+    }*/
 }

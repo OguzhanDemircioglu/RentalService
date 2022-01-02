@@ -18,6 +18,6 @@ public interface LanguageWordService {
     Result update( UpdateLanguageWordRequest updateLanguageRequest);
     Result delete( DeleteLanguageWordRequest deleteLanguageRequest);
 
-    String getByLanguageAndKeyId(int wordId, int language);
+    String getByLanguageAndKeyId(String key, int language);
 }
 

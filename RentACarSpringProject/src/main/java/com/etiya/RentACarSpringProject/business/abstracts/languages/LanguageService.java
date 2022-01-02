@@ -16,5 +16,6 @@ public interface LanguageService {
     Result save( CreateLanguageRequest createLanguageRequest);
     Result update( UpdateLanguageRequest updateLanguageRequest);
     Result delete( DeleteLanguageRequest deleteLanguageRequest);
+    Result checkLanguageExists(int languageId);
 }
 

@@ -5,12 +5,14 @@ import java.util.List;
 import com.etiya.RentACarSpringProject.business.constants.Messages;
 import com.etiya.RentACarSpringProject.dataAccess.forUser.ApplicationUserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.etiya.RentACarSpringProject.business.abstracts.forUser.AuthenticationService;
 import com.etiya.RentACarSpringProject.business.abstracts.forUser.CorporateCustomerService;
 import com.etiya.RentACarSpringProject.business.abstracts.forUser.IndividualCustomerService;
 import com.etiya.RentACarSpringProject.business.abstracts.forUser.UserService;
+import com.etiya.RentACarSpringProject.business.abstracts.languages.LanguageWordService;
 import com.etiya.RentACarSpringProject.business.dtos.forUser.ApplicationUserDto;
 import com.etiya.RentACarSpringProject.business.requests.authenticationRequests.CreateCorporateCustomerRegisterRequest;
 import com.etiya.RentACarSpringProject.business.requests.authenticationRequests.CreateIndividualCustomerRegisterRequest;
@@ -36,17 +38,21 @@ public class AuthenticationManager implements AuthenticationService {
 	private CorporateCustomerService corporateCustomerService;
 	private ApplicationUserDao applicationUserDao;
 	private ModelMapperService modelMapperService;
+	private Environment environment;
+	private LanguageWordService languageWordService;
 
 	@Autowired
 	public AuthenticationManager(UserService userService, IndividualCustomerService individualCustomerService,
 			CorporateCustomerService corporateCustomerService, ApplicationUserDao applicationUserDao,
-								 ModelMapperService modelMapperService) {
+								 ModelMapperService modelMapperService, Environment environment, LanguageWordService languageWordService) {
 		super();
 		this.userService = userService;
 		this.individualCustomerService = individualCustomerService;
 		this.corporateCustomerService = corporateCustomerService;
 		this.modelMapperService = modelMapperService;
 		this.applicationUserDao = applicationUserDao;
+		this.environment=environment;
+		this.languageWordService=languageWordService;
 	}
 
 	@Override
@@ -71,7 +77,8 @@ public class AuthenticationManager implements AuthenticationService {
 				.map(appUser, ApplicationUserDto.class));
 
 		this.individualCustomerService.add(individualCustomerRequest);
-		return new SuccessResult(Messages.Register);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.Register,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -95,7 +102,8 @@ public class AuthenticationManager implements AuthenticationService {
 				.map(appUser, ApplicationUserDto.class));
 
 		this.corporateCustomerService.add(corporateCustomerRequest);
-		return new SuccessResult(Messages.Register);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.Register,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -108,7 +116,8 @@ public class AuthenticationManager implements AuthenticationService {
 			return result;
 		}
 
-		return new SuccessResult(Messages.Login);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.Login,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	private DataResult<ApplicationUser> createUser(String email, String password) {
@@ -126,7 +135,8 @@ public class AuthenticationManager implements AuthenticationService {
 		List<String> emails = this.userService.findAllEmail().getData();
 		for (String email : emails) {
 			if (registerEmail.equals(email)) {
-				return new ErrorResult(Messages.ExistsUser);
+		        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.ExistsUser,Integer.parseInt(environment.getProperty("language"))));
+
 			}
 		}
 		return new SuccessResult();
@@ -138,14 +148,16 @@ public class AuthenticationManager implements AuthenticationService {
 				.equals(createLoginRequest.getPassword() )) {
 			return new SuccessResult();
 		} else {
-			return new ErrorResult(Messages.IncorrectEntry);
+	        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.IncorrectEntry,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 	}
 
 	private Result confirmPassword(String password, String passwordConfirm) {
 
 		if (!password.equals(passwordConfirm)) {
-			return new ErrorResult(Messages.IncorrectPassword);
+	        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.IncorrectPassword,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 		return new SuccessResult();
 	}
@@ -153,7 +165,8 @@ public class AuthenticationManager implements AuthenticationService {
 	private Result checkEmailAndPassword(String email) {
 		if (!this.applicationUserDao.existsByEmail(email)) {
 
-			return new ErrorResult("Messages.LOGINEMAILERROR");
+	        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.LOGINEMAILERROR,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 		return new SuccessResult();
 	}

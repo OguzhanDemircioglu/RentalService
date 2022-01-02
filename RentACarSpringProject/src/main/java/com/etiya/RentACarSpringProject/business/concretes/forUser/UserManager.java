@@ -6,11 +6,15 @@ import java.util.stream.Collectors;
 import com.etiya.RentACarSpringProject.business.constants.Messages;
 import com.etiya.RentACarSpringProject.core.results.*;
 import com.etiya.RentACarSpringProject.dataAccess.forUser.ApplicationUserDao;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.etiya.RentACarSpringProject.business.abstracts.forUser.UserService;
+import com.etiya.RentACarSpringProject.business.abstracts.languages.LanguageWordService;
 import com.etiya.RentACarSpringProject.business.dtos.forUser.ApplicationUserDto;
+import com.etiya.RentACarSpringProject.business.dtos.forUser.IndividualCustomerDto;
 import com.etiya.RentACarSpringProject.business.requests.applicationUserRequest.CreateApplicationUserRequest;
 import com.etiya.RentACarSpringProject.business.requests.applicationUserRequest.DeleteApplicationUserRequest;
 import com.etiya.RentACarSpringProject.business.requests.applicationUserRequest.UpdateApplicationUserRequest;
@@ -23,12 +27,16 @@ public class UserManager implements UserService {
 
 	private ApplicationUserDao applicationUserDao;
 	private ModelMapperService modelMapperService;
+	private Environment environment;
+	private LanguageWordService languageWordService;
 
 	@Autowired
-	public UserManager(ApplicationUserDao applicationUserDao, ModelMapperService modelMapperService) {
+	public UserManager(ApplicationUserDao applicationUserDao, ModelMapperService modelMapperService, Environment environment, LanguageWordService languageWordService) {
 		super();
 		this.applicationUserDao = applicationUserDao;
 		this.modelMapperService = modelMapperService;
+		this.environment = environment;
+		this.languageWordService = languageWordService;
 	}
 
 	@Override
@@ -43,7 +51,8 @@ public class UserManager implements UserService {
 				.map(applicationUser -> modelMapperService.forDto().map(applicationUser, ApplicationUserDto.class))
 				.collect(Collectors.toList());
 
-		return new SuccessDataResult<List<ApplicationUserDto>>(applicationUsersDto , Messages.UsersListed);
+        return new SuccessDataResult<List<ApplicationUserDto>>(applicationUsersDto ,languageWordService.getByLanguageAndKeyId(Messages.UsersListed,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -55,7 +64,8 @@ public class UserManager implements UserService {
 			return  new ErrorDataResult(result);
 		}
 
-		return new SuccessDataResult<ApplicationUser>(this.applicationUserDao.getById(applicationUserId),Messages.GetUser);
+        return new SuccessDataResult<ApplicationUser>(this.applicationUserDao.getById(applicationUserId), languageWordService.getByLanguageAndKeyId(Messages.GetUser,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -68,7 +78,8 @@ public class UserManager implements UserService {
 		}
 
 		ApplicationUser applicationUser = this.applicationUserDao.getById(applicationUserId);
-		return new SuccessDataResult<ApplicationUserDto>(modelMapperService.forDto().map(applicationUser, ApplicationUserDto.class),Messages.GetUser);
+        return new SuccessDataResult<ApplicationUserDto>(modelMapperService.forDto().map(applicationUser, ApplicationUserDto.class), languageWordService.getByLanguageAndKeyId(Messages.GetUser,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -85,7 +96,8 @@ public class UserManager implements UserService {
 		}
 
 		this.applicationUserDao.save(applicationUser);
-		return new SuccessResult(Messages.UserAdded);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.UserAdded,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -99,7 +111,8 @@ public class UserManager implements UserService {
 		ApplicationUser applicationUser = modelMapperService.forDto().map(createApplicationUserRequest, ApplicationUser.class);
 
 		this.applicationUserDao.save(applicationUser);
-		return new SuccessResult(Messages.UserAdded);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.UserAdded,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -125,7 +138,8 @@ public class UserManager implements UserService {
 		ApplicationUser appUser = modelMapperService.forDto().map(updateApplicationUserRequest, ApplicationUser.class);
 
 		this.applicationUserDao.save(appUser);
-		return new SuccessResult(Messages.UserUpdated);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.UserUpdated,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -140,7 +154,8 @@ public class UserManager implements UserService {
 		ApplicationUser applicationUser = this.applicationUserDao.getById(deleteApplicationUserRequest.getUserId());
 
 		this.applicationUserDao.delete(applicationUser);
-		return new SuccessResult(Messages.UserDeleted);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.UserDeleted,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -162,7 +177,8 @@ public class UserManager implements UserService {
 	public Result  checkIfUserIdExists(int userId){
 		var result=this.applicationUserDao.existsById(userId);
 		if (!result){
-			return new ErrorResult(Messages.NoUser);
+	        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.NoUser,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 		return new SuccessResult();
 	}

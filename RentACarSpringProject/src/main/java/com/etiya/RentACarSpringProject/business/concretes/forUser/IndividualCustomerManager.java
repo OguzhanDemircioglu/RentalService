@@ -8,9 +8,11 @@ import com.etiya.RentACarSpringProject.core.business.BusinessRules;
 import com.etiya.RentACarSpringProject.core.results.*;
 import com.etiya.RentACarSpringProject.dataAccess.forUser.IndividualCustomerDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.etiya.RentACarSpringProject.business.abstracts.forUser.IndividualCustomerService;
+import com.etiya.RentACarSpringProject.business.abstracts.languages.LanguageWordService;
 import com.etiya.RentACarSpringProject.business.dtos.forUser.IndividualCustomerDto;
 import com.etiya.RentACarSpringProject.business.requests.individualCustomerRequest.CreateIndividualCustomerRequest;
 import com.etiya.RentACarSpringProject.business.requests.individualCustomerRequest.DeleteIndividualCustomerRequest;
@@ -23,17 +25,22 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 
 	private IndividualCustomerDao individualCustomerDao;
 	private ModelMapperService modelMapperService;
+	private Environment environment;
+	private LanguageWordService languageWordService;
 
 	@Autowired
-	public IndividualCustomerManager(IndividualCustomerDao individualCustomerDao, ModelMapperService modelMapperService) {
+	public IndividualCustomerManager(IndividualCustomerDao individualCustomerDao, ModelMapperService modelMapperService,  Environment environment, LanguageWordService languageWordService) {
 		super();
 		this.individualCustomerDao = individualCustomerDao;
 		this.modelMapperService = modelMapperService;
+		this.environment=environment;
+		this.languageWordService=languageWordService;
 	}
 
 	@Override
 	public DataResult<List<IndividualCustomer>> findAll() {
-		return new SuccessDataResult<List<IndividualCustomer>>(this.individualCustomerDao.findAll(), Messages.IndividualCustomerListed);
+        return new SuccessDataResult<List<IndividualCustomer>>(this.individualCustomerDao.findAll(), languageWordService.getByLanguageAndKeyId(Messages.IndividualCustomerListed,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -47,7 +54,8 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 
 			individualCustomersDto.add(mappedIndividualCustomer);
 		}
-		return new SuccessDataResult<List<IndividualCustomerDto>>(individualCustomersDto, Messages.IndividualCustomerListed);
+        return new SuccessDataResult<List<IndividualCustomerDto>>(individualCustomersDto, languageWordService.getByLanguageAndKeyId(Messages.IndividualCustomerListed,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -59,7 +67,8 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 			return  new ErrorDataResult(result);
 		}
 
-		return new SuccessDataResult<IndividualCustomer>(this.individualCustomerDao.getById(individualCustomerId),  Messages.GetIndividualCustomer);
+        return new SuccessDataResult<IndividualCustomer>(this.individualCustomerDao.getById(individualCustomerId),languageWordService.getByLanguageAndKeyId(Messages.GetIndividualCustomer,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -74,7 +83,8 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 		IndividualCustomerDto mappedIndividualCustomer = modelMapperService.forDto()
 				.map(this.individualCustomerDao.getById(individualCustomerId), IndividualCustomerDto.class);
 
-		return new SuccessDataResult<IndividualCustomerDto>(mappedIndividualCustomer,  Messages.GetIndividualCustomer);
+        return new SuccessDataResult<IndividualCustomerDto>(mappedIndividualCustomer,languageWordService.getByLanguageAndKeyId(Messages.GetIndividualCustomer,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -84,7 +94,8 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 				IndividualCustomer.class);
 
 		this.individualCustomerDao.save(individualCustomer);
-		return new SuccessResult(Messages.CustomerAdded);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.CustomerAdded,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -101,7 +112,8 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 				IndividualCustomer.class);
 
 		this.individualCustomerDao.save(individualCustomer);
-		return new SuccessResult(Messages.CustomerUpdated);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.CustomerUpdated,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -118,7 +130,8 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 				.getById(deleteIndividualCustomerRequest.getIndividualCustomerId());
 
 		this.individualCustomerDao.delete(individualCustomer);
-		return new SuccessResult(Messages.CustomerDeleted);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.CustomerDeleted,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -153,7 +166,8 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 	private Result  checkIfIndividualCustomerIdExists(int individualCustomerId){
 		var result=this.individualCustomerDao.existsById(individualCustomerId);
 		if (!result){
-			return new ErrorResult(Messages.NoIndividualCustomer);
+	        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.NoIndividualCustomer,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 		return new SuccessResult();
 	}

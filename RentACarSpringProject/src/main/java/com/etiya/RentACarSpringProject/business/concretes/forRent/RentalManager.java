@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import com.etiya.RentACarSpringProject.business.abstracts.forCar.CityService;
 import com.etiya.RentACarSpringProject.business.abstracts.forRent.AdditionalServiceService;
 import com.etiya.RentACarSpringProject.business.abstracts.forUser.UserService;
+import com.etiya.RentACarSpringProject.business.abstracts.languages.LanguageWordService;
 import com.etiya.RentACarSpringProject.business.constants.Messages;
 import com.etiya.RentACarSpringProject.core.results.DataResult;
 import com.etiya.RentACarSpringProject.core.results.ErrorDataResult;
@@ -18,6 +19,7 @@ import com.etiya.RentACarSpringProject.core.results.SuccessDataResult;
 import com.etiya.RentACarSpringProject.core.results.SuccessResult;
 import com.etiya.RentACarSpringProject.dataAccess.forRent.RentalDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.etiya.RentACarSpringProject.business.abstracts.forCar.CarService;
@@ -57,13 +59,16 @@ public class RentalManager implements RentalService {
 	private UserService userService;
 	private AdditionalServiceService additionalServiceService;
 	private ModelMapperService modelMapperService;
+	private Environment environment;
+	private LanguageWordService languageWordService;
+	
 
 	@Autowired
 	public RentalManager(RentalDao rentalDao, CarService carService, CorporateCustomerService corporateCustomerService,
 			IndividualCustomerService individualCustomerService, FindeksScoreService findeksScoreService,
 			CreditCardService creditCardService, FakePosService fakePosService, InvoiceService invoiceService,
 			 ModelMapperService modelMapperService,UserService userService,
-						 AdditionalServiceService additionalServiceService,CityService cityService) {
+						 AdditionalServiceService additionalServiceService,CityService cityService,  Environment environment, LanguageWordService languageWordService) {
 		super();
 		this.rentalDao = rentalDao;
 
@@ -78,11 +83,14 @@ public class RentalManager implements RentalService {
 		this.additionalServiceService = additionalServiceService;
 		this.carService = carService;
 		this.cityService=cityService;
+		this.environment=environment;
+		this.languageWordService=languageWordService;
 	}
 
 	@Override
 	public DataResult<List<Rental>> findAll() {
-		return new SuccessDataResult<List<Rental>>(this.rentalDao.findAll(), Messages.RentalsListed);
+        return new SuccessDataResult<List<Rental>>(this.rentalDao.findAll(), languageWordService.getByLanguageAndKeyId(Messages.RentalsListed,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -91,7 +99,8 @@ public class RentalManager implements RentalService {
 		List<RentalDto> rentalsDto = rentals.stream().map(brand -> modelMapperService.forDto().map(brand, RentalDto.class))
 				.collect(Collectors.toList());
 
-		return new SuccessDataResult<List<RentalDto>>(rentalsDto, Messages.RentalsListed);
+        return new SuccessDataResult<List<RentalDto>>(rentalsDto, languageWordService.getByLanguageAndKeyId(Messages.RentalsListed,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -124,7 +133,8 @@ public class RentalManager implements RentalService {
 		this.insertRental(createRentalRequest);
 		this.saveCreditCard(createRentalRequest, createCreditCardRequest);
 
-		return new SuccessResult(Messages.RentalAdded);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.RentalAdded,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -136,7 +146,8 @@ public class RentalManager implements RentalService {
 			return  new ErrorDataResult(result);
 		}
 
-		return new SuccessDataResult<Rental>(rentalDao.getById(rentalId), Messages.GetRental);
+        return new SuccessDataResult<Rental>(rentalDao.getById(rentalId),languageWordService.getByLanguageAndKeyId(Messages.GetRental,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -150,7 +161,8 @@ public class RentalManager implements RentalService {
 
 		Rental rental = this.rentalDao.getById(rentalId);
 
-		return new SuccessDataResult<RentalDto>(modelMapperService.forDto().map(rental, RentalDto.class),Messages.GetRental);
+        return new SuccessDataResult<RentalDto>(modelMapperService.forDto().map(rental, RentalDto.class),languageWordService.getByLanguageAndKeyId(Messages.GetRental,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -164,7 +176,8 @@ public class RentalManager implements RentalService {
 		if (this.rentalDao.existsByApplicationUser_UserId(applicationUserId)) {
 			Rental rental = this.rentalDao.getById(applicationUserId);
 
-			return new SuccessDataResult<RentalDto>(modelMapperService.forDto().map(rental, RentalDto.class),Messages.GetUsersRental);
+	        return new SuccessDataResult<RentalDto>(modelMapperService.forDto().map(rental, RentalDto.class),languageWordService.getByLanguageAndKeyId(Messages.GetUsersRental,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 		return new ErrorResult();
 	}
@@ -199,7 +212,8 @@ public class RentalManager implements RentalService {
 
 		this.insertRental(createRentalRequest);
 		this.saveCreditCard(createRentalRequest, createCreditCardRequest);
-		return new SuccessResult(Messages.RentalUpdated);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.RentalUpdated,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -212,12 +226,14 @@ public class RentalManager implements RentalService {
 		}
 
 		this.rentalDao.delete(rentalDao.getById(deleteRentalRequest.getRentalId()));
-		return new SuccessResult(Messages.RentalDeleted);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.RentalDeleted,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	private Result checkIfCarInRepair(CreateRentalRequest createRentalRequest) {
 		if (carService.getById(createRentalRequest.getCarId()).getData().isInRepair()) {
-			return new ErrorResult(Messages.CarInRepair);
+	        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.CarInRepair,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 		return new SuccessResult();
 	}
@@ -226,7 +242,8 @@ public class RentalManager implements RentalService {
 
 		for (Rental rental : this.rentalDao.getByCar_CarId(createRentalRequest.getCarId())) {
 			if (!rental.isReturned()) {
-				return new ErrorResult(Messages.CarIsnotAvailable);
+		        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.CarIsnotAvailable,Integer.parseInt(environment.getProperty("language"))));
+
 			}
 		}
 		return new SuccessResult();
@@ -236,7 +253,8 @@ public class RentalManager implements RentalService {
 		int rentCity = createRentalRequest.getRentCityId();
 		int carCity = this.carService.getById(createRentalRequest.getCarId()).getData().getCityId();
 		if (rentCity!=carCity) {
-			return new ErrorResult(Messages.CarIsInDiffirentCity);
+	        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.CarIsInDiffirentCity,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 		return new SuccessResult();
 	}
@@ -252,8 +270,10 @@ public class RentalManager implements RentalService {
 					.getMinFindeksScore() > this.findeksScoreService
 							.getIndividualFindeksScore(individualCustomer.getNationalIdentityNumber())) {
 
-				return new ErrorResult(Messages.CustomerCreditScoreNotEnoughtToRentCar);
+				return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.CustomerCreditScoreNotEnoughtToRentCar,Integer.parseInt(environment.getProperty("language"))));
+
 			}
+			
 
 		}
 
@@ -266,7 +286,8 @@ public class RentalManager implements RentalService {
 					.getMinFindeksScore() > this.findeksScoreService
 							.getCorporateFindeksScore(corporateCustomer.getTaxNumber())) {
 
-				return new ErrorResult(Messages.CustomerCreditScoreNotEnoughtToRentCar);
+		        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.CustomerCreditScoreNotEnoughtToRentCar,Integer.parseInt(environment.getProperty("language"))));
+
 			}
 		}
 
@@ -287,7 +308,8 @@ public Result checkPosService(CreateCreditCardRequest createCreditCardRequest, C
 				createCreditCardRequest.getCvc(),totalAmount)) {
 			return new SuccessResult();
 		} else {
-			return new ErrorResult(Messages.PaymentIsNOTReceived);
+	        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.PaymentIsNOTReceived,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 	}
 
@@ -305,7 +327,8 @@ public Result checkPosService(CreateCreditCardRequest createCreditCardRequest, C
 				createCreditCardRequest.getCvc(),totalAmount)) {
 			return new SuccessResult();
 		} else {
-			return new ErrorResult(Messages.PaymentIsNOTReceived);
+	        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.PaymentIsNOTReceived,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 	}
 
@@ -371,7 +394,8 @@ public Result checkPosService(CreateCreditCardRequest createCreditCardRequest, C
 
 		this.createRentalInvoiceRequest(createRentalRequest, rental);
 
-		return new SuccessResult(Messages.RentalAdded);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.RentalAdded,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	public DataResult<CreateInvoiceRequest> createRentalInvoiceRequest(CreateRentalRequest createRentalRequest,
@@ -399,7 +423,8 @@ public Result checkPosService(CreateCreditCardRequest createCreditCardRequest, C
 	private Result  checkIfRentalIdExists(int rentalId){
 		var result=this.rentalDao.existsByRentalId(rentalId);
 		if (!result){
-			return new ErrorResult(Messages.NoRental);
+	        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.NoRental,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 		return new SuccessResult();
 	}
@@ -407,14 +432,16 @@ public Result checkPosService(CreateCreditCardRequest createCreditCardRequest, C
 	private Result  checkIfUserIdExists(int userId){
 		var result=this.rentalDao.existsByApplicationUser_UserId(userId);
 		if (!result){
-			return new ErrorResult(Messages.NoCustomer);
+	        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.NoCustomer,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 		return new SuccessResult();
 	}
 	private Result  checkIfCarExists(int carId){
 		var result=this.carService.checkIfCarIdExists(carId);
 		if (!result.isSuccess()){
-			return new ErrorResult(Messages.NoCar);
+	        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.NoCar,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 		return new SuccessResult();
 	}
@@ -422,6 +449,8 @@ public Result checkPosService(CreateCreditCardRequest createCreditCardRequest, C
 		var result=this.cityService.checkIfCityIdExists(cityId);
 		if (!result.isSuccess()){
 			return new ErrorResult("Şehir yok");
+	        //return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.InvoiceAdded,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 		return new SuccessResult();
 	}

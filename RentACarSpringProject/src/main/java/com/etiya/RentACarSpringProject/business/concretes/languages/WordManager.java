@@ -1,5 +1,6 @@
 package com.etiya.RentACarSpringProject.business.concretes.languages;
 
+import com.etiya.RentACarSpringProject.business.abstracts.languages.LanguageWordService;
 import com.etiya.RentACarSpringProject.business.abstracts.languages.WordService;
 import com.etiya.RentACarSpringProject.business.dtos.languages.WordDto;
 import com.etiya.RentACarSpringProject.business.requests.languages.Word.CreateWordRequest;
@@ -7,12 +8,15 @@ import com.etiya.RentACarSpringProject.business.requests.languages.Word.DeleteWo
 import com.etiya.RentACarSpringProject.business.requests.languages.Word.UpdateWordRequest;
 import com.etiya.RentACarSpringProject.core.mapping.ModelMapperService;
 import com.etiya.RentACarSpringProject.core.results.DataResult;
+import com.etiya.RentACarSpringProject.core.results.ErrorResult;
 import com.etiya.RentACarSpringProject.core.results.Result;
 import com.etiya.RentACarSpringProject.core.results.SuccessDataResult;
 import com.etiya.RentACarSpringProject.core.results.SuccessResult;
 import com.etiya.RentACarSpringProject.dataAccess.languages.WordDao;
 import com.etiya.RentACarSpringProject.entities.languages.Word;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
@@ -24,11 +28,17 @@ public class WordManager implements WordService {
 
     private WordDao wordDao;
     private ModelMapperService modelMapperService;
-
+    private Environment environment;
+    private LanguageWordService languageWordService;
+    
     @Autowired
-    public WordManager(WordDao wordDao,ModelMapperService modelMapperService) {
-        this.wordDao = wordDao;
+    public WordManager(WordDao wordDao,ModelMapperService modelMapperService, Environment environment,
+            @Lazy LanguageWordService languageWordService) {
+        
+    	this.wordDao = wordDao;
         this.modelMapperService=modelMapperService;
+        this.environment = environment;
+        this.languageWordService = languageWordService;
     }
 
     @Override
@@ -58,6 +68,30 @@ public class WordManager implements WordService {
     @Override
     public Result delete(@Valid DeleteWordRequest deleteWordRequest) {
         this.wordDao.deleteById(deleteWordRequest.getWordId());
+        return new SuccessResult();
+    }
+    @Override
+    public Result checkWordIdExists(int wordId) {
+        if (this.wordDao.existsById(wordId)) {
+            return new SuccessResult();
+        }
+        return new ErrorResult();
+    }
+
+    @Override
+    public Result checkKeyExists(String key) {
+        Word word = this.wordDao.getByKey(key);
+        if (word != null) {
+            return new SuccessResult();
+        }
+        return new ErrorResult();
+    }
+
+    private Result ifKeyDuplicated(String key){
+        Word word = this.wordDao.getByKey(key);
+        if (word != null){
+            return new ErrorResult();
+        }
         return new SuccessResult();
     }
 }

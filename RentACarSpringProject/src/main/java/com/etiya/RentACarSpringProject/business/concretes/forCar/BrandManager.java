@@ -41,7 +41,8 @@ public class BrandManager implements BrandService {
 	@Override
 	public DataResult<List<Brand>> findAll() {
 
-		return new SuccessDataResult<List<Brand>>(this.brandDao.findAll(), Messages.BrandsListed);
+        return new SuccessDataResult<List<Brand>>(this.brandDao.findAll(),languageWordService.getByLanguageAndKeyId(Messages.BrandsListed,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -52,7 +53,8 @@ public class BrandManager implements BrandService {
 				.map(brand -> modelMapperService.forDto().map(brand, BrandDto.class))
 				.collect(Collectors.toList());
 
-		return new SuccessDataResult<List<BrandDto>>(brandsDto, Messages.BrandsListed);
+        return new SuccessDataResult<List<BrandDto>>(brandsDto,languageWordService.getByLanguageAndKeyId(Messages.BrandsListed,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -64,7 +66,8 @@ public class BrandManager implements BrandService {
 			return new ErrorDataResult(result);
 		}
 
-		return new SuccessDataResult<Brand>(this.brandDao.getById(brandId), Messages.GetBrand);
+        return new SuccessDataResult<Brand>(this.brandDao.getById(brandId), languageWordService.getByLanguageAndKeyId(Messages.GetBrand,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -78,7 +81,8 @@ public class BrandManager implements BrandService {
 
 		Brand brand = this.brandDao.getById(brandId);
 
-		return new SuccessDataResult<BrandDto>(modelMapperService.forDto().map(brand, BrandDto.class), Messages.GetBrand);
+        return new SuccessDataResult<BrandDto>(modelMapperService.forDto().map(brand, BrandDto.class), languageWordService.getByLanguageAndKeyId(Messages.GetBrand,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -93,8 +97,7 @@ public class BrandManager implements BrandService {
 		Brand brand = modelMapperService.forDto().map(createBrandRequest, Brand.class);
 
 		this.brandDao.save(brand);
-		//return new SuccessResult(Messages.BrandAdded);
-		return new SuccessResult(languageWordService.getByLanguageAndKeyId(1,Integer.parseInt(environment.getProperty("language"))));
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.BrandAdded,Integer.parseInt(environment.getProperty("language"))));
 
 	}
 
@@ -111,7 +114,8 @@ public class BrandManager implements BrandService {
 		Brand brand = modelMapperService.forDto().map(updateBrandRequest, Brand.class);
 
 		this.brandDao.save(brand);
-		return new SuccessResult(Messages.BrandUpdated);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.BrandUpdated,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -126,13 +130,15 @@ public class BrandManager implements BrandService {
 		Brand brand = this.brandDao.getById(deleteBrandRequest.getBrandId());
 
 		this.brandDao.delete(brand);
-		return new SuccessResult(Messages.BrandDeleted);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.BrandDeleted,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	private Result checkIfBrandNameExists(String brandName) {
 
 		if (this.brandDao.existsByBrandName(brandName)) {
-			return new ErrorResult(Messages.ExistBrand);
+	        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.ExistBrand,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 		return new SuccessResult();
 	}
@@ -141,7 +147,8 @@ public class BrandManager implements BrandService {
 
 		var result = this.brandDao.existsById(brandId);
 		if (!result) {
-			return new ErrorResult(Messages.NoBrand);
+	        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.NoBrand,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 		return new SuccessResult();
 	}

@@ -12,11 +12,13 @@ import com.etiya.RentACarSpringProject.core.fakeServices.FakePosService;
 import com.etiya.RentACarSpringProject.core.results.*;
 import com.etiya.RentACarSpringProject.dataAccess.forRent.InvoiceDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.etiya.RentACarSpringProject.business.abstracts.forRent.AdditionalServiceService;
 import com.etiya.RentACarSpringProject.business.abstracts.forCar.CarService;
 import com.etiya.RentACarSpringProject.business.abstracts.forRent.InvoiceService;
+import com.etiya.RentACarSpringProject.business.abstracts.languages.LanguageWordService;
 import com.etiya.RentACarSpringProject.business.dtos.forRent.InvoiceDto;
 import com.etiya.RentACarSpringProject.business.requests.invoiceRequest.CreateInvoiceRequest;
 import com.etiya.RentACarSpringProject.business.requests.invoiceRequest.DeleteInvoiceRequest;
@@ -35,22 +37,28 @@ public class InvoiceManager implements InvoiceService {
 	private AdditionalServiceService additionalServiceService;
 	private FakePosService fakePosService;
 	private ModelMapperService modelMapperService;
+	private Environment environment;
+	private LanguageWordService languageWordService;
+	
 
 	@Autowired
 	public InvoiceManager(InvoiceDao invoiceDao, CarService carService, AdditionalServiceService additionalServiceService,
-						  FakePosService fakePosService, ModelMapperService modelMapperService) {
+						  FakePosService fakePosService, ModelMapperService modelMapperService,  Environment environment, LanguageWordService languageWordService) {
 		this.invoiceDao = invoiceDao;
 		this.carService = carService;
 		this.additionalServiceService = additionalServiceService;
 		this.fakePosService = fakePosService;
 		this.modelMapperService = modelMapperService;
+		this.environment=environment;
+		this.languageWordService=languageWordService;
 	}
 
 
 
 	@Override
 	public DataResult<List<Invoice>> findAll() {
-		return new SuccessDataResult<List<Invoice>>(this.invoiceDao.findAll(), Messages.InvoicesListed);
+        return new SuccessDataResult<List<Invoice>>(this.invoiceDao.findAll(),languageWordService.getByLanguageAndKeyId(Messages.InvoicesListed,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -59,7 +67,8 @@ public class InvoiceManager implements InvoiceService {
 		List<InvoiceDto> invoicesDto = invoices.stream().map(brand -> modelMapperService.forDto().map(brand, InvoiceDto.class))
 				.collect(Collectors.toList());
 
-		return new SuccessDataResult<List<InvoiceDto>>(invoicesDto,  Messages.InvoicesListed);
+        return new SuccessDataResult<List<InvoiceDto>>(invoicesDto, languageWordService.getByLanguageAndKeyId(Messages.InvoicesListed,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -71,7 +80,8 @@ public class InvoiceManager implements InvoiceService {
 			return  new ErrorDataResult(result);
 		}
 
-		return new SuccessDataResult<Invoice>(this.invoiceDao.getById(invoiceId), Messages.GetInvoice);
+        return new SuccessDataResult<Invoice>(this.invoiceDao.getById(invoiceId),languageWordService.getByLanguageAndKeyId(Messages.GetInvoice,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -85,7 +95,8 @@ public class InvoiceManager implements InvoiceService {
 
 		Invoice invoice = this.invoiceDao.getById(invoiceId);
 
-		return new SuccessDataResult<InvoiceDto>(modelMapperService.forDto().map(invoice, InvoiceDto.class), Messages.GetInvoice);
+        return new SuccessDataResult<InvoiceDto>(modelMapperService.forDto().map(invoice, InvoiceDto.class), languageWordService.getByLanguageAndKeyId(Messages.GetInvoice,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -94,7 +105,8 @@ public class InvoiceManager implements InvoiceService {
 		List<InvoiceDto> invoicesDto = invoices.stream().map(invoice -> modelMapperService.forDto().map(invoice, InvoiceDto.class))
 				.collect(Collectors.toList());
 
-		return new SuccessDataResult<List<InvoiceDto>>(invoicesDto,  Messages.BetweenDatesInvoices);
+        return new SuccessDataResult<List<InvoiceDto>>(invoicesDto, languageWordService.getByLanguageAndKeyId(Messages.BetweenDatesInvoices,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -103,7 +115,8 @@ public class InvoiceManager implements InvoiceService {
 		List<InvoiceDto> invoicesDto = invoices.stream().map(invoice -> modelMapperService.forDto().map(invoice, InvoiceDto.class))
 				.collect(Collectors.toList());
 
-		return new SuccessDataResult<List<InvoiceDto>>(invoicesDto,  Messages.InvoicesOfCustomerListed);
+        return new SuccessDataResult<List<InvoiceDto>>(invoicesDto, languageWordService.getByLanguageAndKeyId(Messages.InvoicesOfCustomerListed,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -131,7 +144,8 @@ public class InvoiceManager implements InvoiceService {
 
 		this.invoiceDao.save(invoice);
 
-		return new SuccessResult(Messages.InvoiceAdded);
+        return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.InvoiceAdded,Integer.parseInt(environment.getProperty("language"))));
+
 	}
 
 	@Override
@@ -151,7 +165,8 @@ public class InvoiceManager implements InvoiceService {
 
 	private Result checkInvoiceByRentalId(int rentalId) {
 		if (this.invoiceDao.existsByRental_RentalId(rentalId)) {
-			return new ErrorResult(Messages.ERROR);
+	        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.ERROR,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 		return new SuccessResult();
 	}
@@ -210,7 +225,8 @@ public class InvoiceManager implements InvoiceService {
 	private Result  checkIfInvoiceIdExists(int invoiceId){
 		var result=this.invoiceDao.existsById(invoiceId);
 		if (!result){
-			return new ErrorResult(Messages.NoInvoice);
+	        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.NoInvoice,Integer.parseInt(environment.getProperty("language"))));
+
 		}
 		return new SuccessResult();
 	}
