@@ -29,6 +29,7 @@ public class CreateIndividualCustomerRegisterRequest {
 	private String lastName;
 
 	@NotNull
+	@Size(min=11, max=11)
 	private String nationalIdentityNumber;;
 	
 	@Size(min=6, max=20)
