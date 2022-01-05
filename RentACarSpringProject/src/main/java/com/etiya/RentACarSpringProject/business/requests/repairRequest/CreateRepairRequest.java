@@ -15,7 +15,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class CreateRepairRequest {
 	
-	@JsonIgnore
+	@NotNull
 	private int repairId;
 
 	@JsonIgnore
