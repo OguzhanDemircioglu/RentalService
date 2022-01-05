@@ -53,12 +53,6 @@ public class CarManager implements CarService {
 	}
 
 	@Override
-	public DataResult<List<Car>> findAll() {
-        return new SuccessDataResult<List<Car>>(this.carDao.findAll(),languageWordService.getByLanguageAndKeyId(Messages.CarsListed,Integer.parseInt(environment.getProperty("language"))));
-
-	}
-
-	@Override
 	public DataResult<List<CarDto>> getAll() {
 		List<Car> cars = this.carDao.findAll();
         return new SuccessDataResult<List<CarDto>>(this.mappedCarList(cars),languageWordService.getByLanguageAndKeyId(Messages.CarsListed,Integer.parseInt(environment.getProperty("language"))));
@@ -119,22 +113,10 @@ public class CarManager implements CarService {
 		this.carDao.delete(car);
         return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.CarDeleted,Integer.parseInt(environment.getProperty("language"))));
 
-
 	}
 
 	@Override
-	public DataResult<Car> findById(int carId) {
-
-		var result= BusinessRules.run(checkIfCarIdExists(carId));
-		if (result!=null){
-			return  new ErrorDataResult(result);
-		}
-        return new SuccessDataResult<Car>(this.carDao.getById(carId),languageWordService.getByLanguageAndKeyId(Messages.GetCar,Integer.parseInt(environment.getProperty("language"))));
-
-	}
-
-	@Override
-	public DataResult<CarDto> getById(int carId) {
+	public DataResult<Car> getById(int carId) {
 
 		var result= BusinessRules.run(checkIfCarIdExists(carId));
 		if (result!=null){
@@ -143,7 +125,8 @@ public class CarManager implements CarService {
 
 		Car car = this.carDao.getById(carId);
 
-        return new SuccessDataResult<CarDto>(modelMapperService.forDto().map(car, CarDto.class),languageWordService.getByLanguageAndKeyId(Messages.GetCar,Integer.parseInt(environment.getProperty("language"))));
+        return new SuccessDataResult<Car>(carDao.getById(carId),
+				languageWordService.getByLanguageAndKeyId(Messages.GetCar,Integer.parseInt(environment.getProperty("language"))));
 
 	}
 
@@ -183,27 +166,17 @@ public class CarManager implements CarService {
 
 		List<Car> cars = this.carDao.getByCity_CityId(cityId);
         return new SuccessDataResult<List<CarDto>>(this.mappedCarList(cars),languageWordService.getByLanguageAndKeyId(Messages.CarsListedByCity,Integer.parseInt(environment.getProperty("language"))));
-
-	}
-
-	@Override
-	public DataResult<List<Car>> findAllAvailableCars() {
-        return new SuccessDataResult<List<Car>>(this.carDao.findByInRepairFalse(),languageWordService.getByLanguageAndKeyId(Messages.AvailableCarListed,Integer.parseInt(environment.getProperty("language"))));
-
 	}
 
 	@Override
 	public DataResult<List<CarDto>> getAllAvailableCars() {
         return new SuccessDataResult<List<CarDto>>(this.mappedCarList(this.carDao.findByInRepairFalse()),languageWordService.getByLanguageAndKeyId(Messages.AvailableCarListed,Integer.parseInt(environment.getProperty("language"))));
-
 	}
 
 	@Override
 	public DataResult<List<CarwithBrandandColorDetail>> getCarsWithDetails() {
         return new SuccessDataResult<List<CarwithBrandandColorDetail>>(this.carDao.getCarsWithDetails(),languageWordService.getByLanguageAndKeyId(Messages.CarDetailsListed,Integer.parseInt(environment.getProperty("language"))));
-
 	}
-
 
 	private List<CarDto> mappedCarList(List<Car> cars) {
 		List<CarDto> carsDto = new ArrayList<CarDto>();
@@ -214,48 +187,6 @@ public class CarManager implements CarService {
 			carsDto.add(mappedCar);
 		}
 		return carsDto;
-	}
-
-	private CarDto mappedCar(Car car) {
-		CarDto mappedCar = modelMapperService.forDto().map(car, CarDto.class);
-
-		return mappedCar;
-	}
-
-	@Override
-	public DataResult<List<Car>> findCarsByColorId(int colorId) {
-
-		var result= BusinessRules.run(colorService.checkIfColorIdExists(colorId));
-		if (result!=null){
-			return  new ErrorDataResult(result);
-		}
-
-        return new SuccessDataResult<List<Car>>(this.carDao.getByColor_ColorId(colorId),languageWordService.getByLanguageAndKeyId(Messages.CarsListedByColor,Integer.parseInt(environment.getProperty("language"))));
-
-	}
-
-	@Override
-	public DataResult<List<Car>> findCarsByBrandId(int brandId) {
-
-		var result= BusinessRules.run(brandService.checkIfBrandIdExists(brandId));
-		if (result!=null){
-			return  new ErrorDataResult(result);
-		}
-
-        return new SuccessDataResult<List<Car>>(this.carDao.getByBrand_BrandId(brandId),languageWordService.getByLanguageAndKeyId(Messages.CarsListedByBrand,Integer.parseInt(environment.getProperty("language"))));
-
-	}
-
-	@Override
-	public DataResult<List<Car>> findByCity(int cityId) {
-
-		var result= BusinessRules.run(cityService.checkIfCityIdExists(cityId));
-		if (result!=null){
-			return  new ErrorDataResult(result);
-		}
-
-        return new SuccessDataResult<List<Car>>(this.carDao.getByCity_CityId(cityId),languageWordService.getByLanguageAndKeyId(Messages.CarsListedByCity,Integer.parseInt(environment.getProperty("language"))));
-
 	}
 
 	public Result  checkIfCarIdExists(int carId){

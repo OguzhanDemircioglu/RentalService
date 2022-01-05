@@ -3,16 +3,14 @@ package com.etiya.RentACarSpringProject.business.concretes.languages;
 
 import com.etiya.RentACarSpringProject.business.abstracts.languages.LanguageService;
 import com.etiya.RentACarSpringProject.business.abstracts.languages.LanguageWordService;
+import com.etiya.RentACarSpringProject.business.constants.Messages;
 import com.etiya.RentACarSpringProject.business.dtos.languages.LanguageDto;
 import com.etiya.RentACarSpringProject.business.requests.languages.Language.CreateLanguageRequest;
 import com.etiya.RentACarSpringProject.business.requests.languages.Language.DeleteLanguageRequest;
 import com.etiya.RentACarSpringProject.business.requests.languages.Language.UpdateLanguageRequest;
+import com.etiya.RentACarSpringProject.core.business.BusinessRules;
 import com.etiya.RentACarSpringProject.core.mapping.ModelMapperService;
-import com.etiya.RentACarSpringProject.core.results.DataResult;
-import com.etiya.RentACarSpringProject.core.results.ErrorResult;
-import com.etiya.RentACarSpringProject.core.results.Result;
-import com.etiya.RentACarSpringProject.core.results.SuccessDataResult;
-import com.etiya.RentACarSpringProject.core.results.SuccessResult;
+import com.etiya.RentACarSpringProject.core.results.*;
 import com.etiya.RentACarSpringProject.dataAccess.languages.LanguageDao;
 import com.etiya.RentACarSpringProject.entities.languages.Language;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +49,14 @@ public class LanguageManager implements LanguageService {
 
     @Override
     public Result save(@Valid CreateLanguageRequest createLanguageRequest) {
+
+        var result = BusinessRules.run(
+                checkIfLanguageNameExists(createLanguageRequest.getName()));
+
+        if (result != null) {
+            return new ErrorDataResult(result);
+        }
+
         Language language = modelMapperService.forRequest().map(createLanguageRequest, Language.class);
         this.languageDao.save(language);
         return new SuccessResult();
@@ -59,6 +65,14 @@ public class LanguageManager implements LanguageService {
 
     @Override
     public Result update(@Valid UpdateLanguageRequest updateLanguageRequest) {
+
+        var result = BusinessRules.run(checkIfLanguageIdExists(updateLanguageRequest.getLanguageId()),
+                checkIfLanguageNameExists(updateLanguageRequest.getLanguageName()));
+
+        if (result != null) {
+            return new ErrorDataResult(result);
+        }
+
         Language language = modelMapperService.forRequest().map(updateLanguageRequest, Language.class);
         this.languageDao.save(language);
         return new SuccessResult();
@@ -66,6 +80,12 @@ public class LanguageManager implements LanguageService {
 
     @Override
     public Result delete(@Valid DeleteLanguageRequest deleteLanguageRequest) {
+
+        var result = BusinessRules.run(checkIfLanguageIdExists(deleteLanguageRequest.getLanguageId()));
+
+        if (result != null) {
+            return new ErrorDataResult(result);
+        }
 
         this.languageDao.deleteById(deleteLanguageRequest.getLanguageId());
         return new SuccessResult();
@@ -81,4 +101,23 @@ public class LanguageManager implements LanguageService {
             return new ErrorResult();
         }
     }
+
+    public Result  checkIfLanguageIdExists(int languageId){
+
+        var result=this.languageDao.existsById(languageId);
+        if (!result){
+            return new ErrorResult(languageWordService.getByLanguageAndKeyId("Böyle bir dil yok",Integer.parseInt(environment.getProperty("language"))));
+
+        }
+        return new SuccessResult();
+    }
+
+    private Result checkIfLanguageNameExists(String languageName) {
+        if (this.languageDao.existsLanguageByName(languageName)) {
+            return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.ExistColor,Integer.parseInt(environment.getProperty("language"))));
+
+        }
+        return new SuccessResult();
+    }
+
 }

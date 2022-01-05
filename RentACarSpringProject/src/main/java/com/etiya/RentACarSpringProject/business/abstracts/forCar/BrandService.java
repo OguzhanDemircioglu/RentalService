@@ -10,13 +10,9 @@ import com.etiya.RentACarSpringProject.core.results.*;
 import com.etiya.RentACarSpringProject.entities.Brand;
 
 public interface BrandService {
-	
-	DataResult<List<Brand>> findAll();
 
 	DataResult<List<BrandDto>> getAll();
-	
-	DataResult<Brand> findById(int brandId);
-	
+
 	DataResult<BrandDto> getById(int brandId);
 	
 	Result add(CreateBrandRequest createBrandRequest);

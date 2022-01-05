@@ -33,7 +33,7 @@ public class CarController {
 	}
 	
 	@GetMapping("/getById")
-	public DataResult<CarDto> getById(int carId) {
+	public DataResult<Car> getById(int carId) {
 		return this.carService.getById(carId);
 	}
 	

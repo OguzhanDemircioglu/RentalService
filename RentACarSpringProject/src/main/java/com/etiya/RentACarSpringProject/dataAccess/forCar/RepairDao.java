@@ -6,4 +6,5 @@ import com.etiya.RentACarSpringProject.entities.Repair;
 
 public interface RepairDao extends JpaRepository<Repair, Integer> {
 
+    Repair getRepairByCar_CarId(int carId);
 }

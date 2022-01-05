@@ -8,7 +8,6 @@ import com.etiya.RentACarSpringProject.core.webServices.PosService;
 @Service
 public class FakePosAdapter implements FakePosService {
 
-
 	@Override
 	public boolean fakePosService(String nameOnCard, String creditCardNumber, String expirationDate, String cvc, double price) {
 		PosService posService = new PosService();

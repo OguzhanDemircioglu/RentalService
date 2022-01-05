@@ -11,13 +11,9 @@ import com.etiya.RentACarSpringProject.core.results.Result;
 import com.etiya.RentACarSpringProject.entities.IndividualCustomer;
 
 public interface IndividualCustomerService {
-	
-	DataResult<List<IndividualCustomer>> findAll();
 
 	DataResult<List<IndividualCustomerDto>> getAll();
 
-	DataResult<IndividualCustomer> findById(int individualCustomerId);
-	
 	DataResult<IndividualCustomerDto> getById(int individualCustomerId);
 
 	Result add(CreateIndividualCustomerRequest createIndividualCustomerRequest);

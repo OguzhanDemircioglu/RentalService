@@ -39,13 +39,6 @@ public class BrandManager implements BrandService {
 	}
 
 	@Override
-	public DataResult<List<Brand>> findAll() {
-
-        return new SuccessDataResult<List<Brand>>(this.brandDao.findAll(),languageWordService.getByLanguageAndKeyId(Messages.BrandsListed,Integer.parseInt(environment.getProperty("language"))));
-
-	}
-
-	@Override
 	public DataResult<List<BrandDto>> getAll() {
 
 		List<Brand> brands = this.brandDao.findAll();
@@ -54,19 +47,6 @@ public class BrandManager implements BrandService {
 				.collect(Collectors.toList());
 
         return new SuccessDataResult<List<BrandDto>>(brandsDto,languageWordService.getByLanguageAndKeyId(Messages.BrandsListed,Integer.parseInt(environment.getProperty("language"))));
-
-	}
-
-	@Override
-	public DataResult<Brand> findById(int brandId) {
-
-		var result = BusinessRules.run(checkIfBrandIdExists(brandId));
-
-		if (result != null) {
-			return new ErrorDataResult(result);
-		}
-
-        return new SuccessDataResult<Brand>(this.brandDao.getById(brandId), languageWordService.getByLanguageAndKeyId(Messages.GetBrand,Integer.parseInt(environment.getProperty("language"))));
 
 	}
 

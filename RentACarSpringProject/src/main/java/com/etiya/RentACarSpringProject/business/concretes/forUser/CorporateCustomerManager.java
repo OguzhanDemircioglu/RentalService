@@ -39,12 +39,6 @@ public class CorporateCustomerManager implements CorporateCustomerService {
 	}
 
 	@Override
-	public DataResult<List<CorporateCustomer>> findAll() {
-        return new SuccessDataResult<List<CorporateCustomer>>(this.corporateCustomerDao.findAll(),languageWordService.getByLanguageAndKeyId(Messages.CorporateCustomerListed,Integer.parseInt(environment.getProperty("language"))));
-
-	}
-
-	@Override
 	public DataResult<List<CorporateCustomerDto>> getAll() {
 		List<CorporateCustomer> corporateCustomers = this.corporateCustomerDao.findAll();
 		List<CorporateCustomerDto> corporateCustomersDto = new ArrayList<CorporateCustomerDto>();
@@ -56,17 +50,6 @@ public class CorporateCustomerManager implements CorporateCustomerService {
 			corporateCustomersDto.add(mappedCorporateCustomer);
 		}
         return new SuccessDataResult<List<CorporateCustomerDto>>(corporateCustomersDto,languageWordService.getByLanguageAndKeyId(Messages.CorporateCustomerListed,Integer.parseInt(environment.getProperty("language"))));
-
-	}
-
-	@Override
-	public DataResult<CorporateCustomer> findById(int corporateCustomerId) {
-		var result= BusinessRules.run(checkIfCorporateCustomerIdExists(corporateCustomerId));
-
-		if(result!=null){
-			return  new ErrorDataResult(result);
-		}
-        return new SuccessDataResult<CorporateCustomer>(this.corporateCustomerDao.getById(corporateCustomerId),languageWordService.getByLanguageAndKeyId(Messages.GetCorporateCustomer,Integer.parseInt(environment.getProperty("language"))));
 
 	}
 

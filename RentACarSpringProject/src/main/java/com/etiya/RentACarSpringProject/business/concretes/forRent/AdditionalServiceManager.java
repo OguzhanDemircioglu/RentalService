@@ -41,10 +41,9 @@ public class AdditionalServiceManager implements AdditionalServiceService {
 	@Override
 	public DataResult<List<AdditionalService>> findAll() {
 
-        return new SuccessDataResult<List<AdditionalService>>(this.additionalServiceDao.findAll(),languageWordService.getByLanguageAndKeyId(Messages.AdditionalServicesListed,Integer.parseInt(environment.getProperty("language"))));
-
+		return new SuccessDataResult<List<AdditionalService>>(this.additionalServiceDao.findAll(),
+				Messages.AdditionalServicesListed);
 	}
-
 	@Override
 	public DataResult<List<AdditionalServiceDto>> getAll() {
 	
@@ -52,19 +51,6 @@ public class AdditionalServiceManager implements AdditionalServiceService {
 				.map(additionalService -> modelMapperService.forDto()
 						.map(additionalService, AdditionalServiceDto.class))
 							.collect(Collectors.toList()),languageWordService.getByLanguageAndKeyId(Messages.AdditionalServicesListed,Integer.parseInt(environment.getProperty("language"))));
-
-	}
-
-	@Override
-	public DataResult<AdditionalService> findById(int additionalServiceId) {
-
-		var result = BusinessRules.run(checkIfAdditionalServiceIdExists(additionalServiceId));
-
-		if (result != null) {
-			return new ErrorDataResult(result);
-		}
-		
-        return new SuccessDataResult<AdditionalService>(this.additionalServiceDao.getById(additionalServiceId),languageWordService.getByLanguageAndKeyId(Messages.GetAdditionalService,Integer.parseInt(environment.getProperty("language"))));
 
 	}
 

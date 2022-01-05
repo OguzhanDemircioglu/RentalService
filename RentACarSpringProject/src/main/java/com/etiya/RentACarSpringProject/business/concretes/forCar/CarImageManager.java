@@ -57,13 +57,6 @@ public class CarImageManager implements CarImageService {
 	}
 
 	@Override
-	public DataResult<List<CarImage>> findAll() {
-
-        return new SuccessDataResult<List<CarImage>>(this.carImageDao.findAll(),languageWordService.getByLanguageAndKeyId(Messages.CarsImagesListed,Integer.parseInt(environment.getProperty("language"))));
-
-	}
-
-	@Override
 	public DataResult<List<CarImageDto>> getAll() {
 
 	
@@ -104,7 +97,7 @@ public class CarImageManager implements CarImageService {
 		carImage.setCar(car);
 		carImage.setDate(this.getTodaysDate());
 		carImage.setImagePath(
-				"C:/Users/oguzhan.demircioglu/Desktop/Yeni klasör/ReCapProject/RentACarSpringProject/src/main/java/images"
+				"C:/Users/oguzhan.demircioglu/Desktop/New folder"
 				+ this.getRandomName() + ".jpg");
 
 		this.saveImage(createCarImageRequest.getImage(), carImage.getImagePath());
@@ -133,7 +126,7 @@ public class CarImageManager implements CarImageService {
 		carImage.setCar(car);
 		carImage.setDate(this.getTodaysDate());
 		carImage.setImagePath(
-				"C:/Users/oguzhan.demircioglu/Desktop/Yeni klasör/ReCapProject/RentACarSpringProject/src/main/java/images/"
+				"C:/Users/oguzhan.demircioglu/Desktop/New folder"
 						+ this.getRandomName() + ".jpg");
 
 		this.saveImage(updateCarImageRequest.getImage(), carImage.getImagePath());
@@ -161,32 +154,6 @@ public class CarImageManager implements CarImageService {
 	}
 
 	@Override
-	public DataResult<List<CarImage>> findImagePathsByCarId(int carId) {
-
-		var result= BusinessRules.run(checkIfCarIdExists(carId));
-
-		if(result!=null){
-			return  new ErrorDataResult(result);
-		}
-
-		int limit = carImageDao.countByCar_CarId(carId);
-
-		if (limit > 0) {
-	        return new ErrorDataResult<List<CarImage>>(this.carImageDao.getByCar_CarId(carId),languageWordService.getByLanguageAndKeyId(Messages.GetCarImages,Integer.parseInt(environment.getProperty("language"))));
-
-		}
-
-		List<CarImage> carImages = new ArrayList<CarImage>();
-
-		CarImage carImage = new CarImage();
-		carImage.setImagePath("C:/Users/oguzhan.demircioglu/Desktop/Yeni klasör/ReCapProject/RentACarSpringProject/src/main/java/images/DefaultEtiya.jpg");
-
-		carImages.add(carImage);
-        return new SuccessDataResult<List<CarImage>>(carImages,languageWordService.getByLanguageAndKeyId(Messages.GetCarImages,Integer.parseInt(environment.getProperty("language"))));
-
-	}
-	
-	@Override
 	public DataResult<List<CarImageDto>> getImagePathsByCarId(int carId) {
 
 		int limit = carImageDao.countByCar_CarId(carId);
@@ -205,7 +172,7 @@ public class CarImageManager implements CarImageService {
 
 		CarImageDto carImageDto = new CarImageDto();
 		carImageDto.setImagePath(
-				"C:/Users/oguzhan.demircioglu/Desktop/Yeni klasör/ReCapProject/RentACarSpringProject/src/main/java/images/DefaultEtiya.jpg");
+				"C:/Users/oguzhan.demircioglu/Desktop/DefaultEtiya.jpg");
 		carImagesDto.add(carImageDto);
 
         return new SuccessDataResult<List<CarImageDto>>(carImagesDto,languageWordService.getByLanguageAndKeyId(Messages.GetCarImages,Integer.parseInt(environment.getProperty("language"))));

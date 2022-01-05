@@ -12,15 +12,11 @@ import com.etiya.RentACarSpringProject.entities.CarImage;
 
 
 public interface CarImageService {
-	
-	DataResult<List<CarImage>> findAll();
 
 	DataResult<List<CarImageDto>> getAll();
 	
 	DataResult<CarImage> getById(int carImageId); 
-	
-	DataResult<List<CarImage>> findImagePathsByCarId(int carId);
-	
+
 	DataResult<List<CarImageDto>> getImagePathsByCarId(int carId);
 	
 	Result add(CreateCarImageRequest createCarImageRequest);

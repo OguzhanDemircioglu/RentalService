@@ -13,27 +13,15 @@ import com.etiya.RentACarSpringProject.entities.complexTypies.CarwithBrandandCol
 
 public interface CarService {
 
-	DataResult<List<Car>> findAll();
-
 	DataResult<List<CarDto>> getAll();
 
-	DataResult<Car> findById(int carId);  
-
-	DataResult<CarDto> getById(int carId);
-
-	DataResult<List<Car>> findCarsByColorId(int colorId);
+	DataResult<Car> getById(int carId);
 
 	DataResult<List<CarDto>> getCarsByColorId(int colorId);
-	
-	DataResult<List<Car>> findCarsByBrandId(int brandId);
 
 	DataResult<List<CarDto>> getCarsByBrandId(int brandId);
 
-	DataResult<List<Car>> findByCity(int cityId);
-
 	DataResult<List<CarDto>> getByCity(int cityId);
-
-	DataResult<List<Car>> findAllAvailableCars();
 
 	DataResult<List<CarDto>> getAllAvailableCars();
 

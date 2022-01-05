@@ -1,8 +1,11 @@
 package com.etiya.RentACarSpringProject.business.concretes.forCar;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -49,12 +52,6 @@ public class RepairManager implements RepairService {
 	}
 
 	@Override
-	public DataResult<List<Repair>> findAll() {
-        return new SuccessDataResult<List<Repair>>(this.repairDao.findAll(),languageWordService.getByLanguageAndKeyId(Messages.RepairsListed,Integer.parseInt(environment.getProperty("language"))));
-
-	}
-
-	@Override
 	public DataResult<List<RepairDto>> getAll() {
 		List<Repair> repairs = this.repairDao.findAll();
 		List<RepairDto> repairsDto = new ArrayList<RepairDto>();
@@ -72,15 +69,22 @@ public class RepairManager implements RepairService {
 	@Override
 	public Result insert(CreateRepairRequest createRepairRequest) {
 
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-		LocalDate rentDate = LocalDate.parse(createRepairRequest.getRepairStartDate(), formatter);
-
+		Date now= new java.sql.Date(new java.util.Date().getTime());
+		System.out.println(now);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		String strDate = dateFormat.format(now);
+		System.out.println(strDate);
 
 		Repair repair = modelMapperService.forRequest().map(createRepairRequest, Repair.class);
+
+		repair.setRepairId(createRepairRequest.getRepairId());
+		repair.setCar(this.carService.getById(createRepairRequest.getCarId()).getData());
+		repair.setRepairStartDate(strDate);
+		repair.setRepairFinishDate(null);
+
 		this.setInRepairIfFinishDateIsNull(createRepairRequest.getCarId(), createRepairRequest.getRepairFinishDate());
 		this.repairDao.save(repair);
         return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.RepairAdded,Integer.parseInt(environment.getProperty("language"))));
-
 
 	}
 
@@ -92,12 +96,21 @@ public class RepairManager implements RepairService {
 			return  new ErrorDataResult(result);
 		}
 
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-		LocalDate returnDate = LocalDate.parse(updateRepairRequest.getRepairFinishDate(), formatter);
+		Date now= new java.sql.Date(new java.util.Date().getTime());
+		System.out.println(now);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		String FDate = dateFormat.format(now);
+		System.out.println(FDate);
 
-		Repair repair = modelMapperService.forRequest().map(updateRepairRequest, Repair.class);
+		Repair repair = this.repairDao.getRepairByCar_CarId(updateRepairRequest.getCarId());
+		
+		repair.setRepairId(updateRepairRequest.getRepairId());
+		repair.setCar(this.carService.getById(updateRepairRequest.getCarId()).getData());
+		repair.setRepairStartDate(this.repairDao.getRepairByCar_CarId(updateRepairRequest.getCarId()).getRepairStartDate());
+		repair.setRepairFinishDate(FDate);
 
-		this.setInRepairIfFinishDateIsNull(updateRepairRequest.getCarId(), updateRepairRequest.getRepairFinishDate());
+
+		this.setInRepairIfFinishDateIsNOTNull(updateRepairRequest.getCarId(), updateRepairRequest.getRepairFinishDate());
 		this.repairDao.save(repair);
         return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.RepairUpdated,Integer.parseInt(environment.getProperty("language"))));
 
@@ -118,17 +131,44 @@ public class RepairManager implements RepairService {
 	}
 
 	private Result setInRepairIfFinishDateIsNull(int carId, String repairFinishDate) {
+
 		if (repairFinishDate==null ) {
 			var result= this.carService.getById(carId).getData();
 			UpdateCarRequest updateCarRequest=new UpdateCarRequest();
 			updateCarRequest.setCarId(result.getCarId());
 			updateCarRequest.setCarName(result.getCarName());
-			updateCarRequest.setBrandId(result.getBrandId());
-			updateCarRequest.setColorId(result.getColorId());
-			updateCarRequest.setCityId(result.getCityId());
+			updateCarRequest.setBrandId(result.getBrand().getBrandId());
+			updateCarRequest.setColorId(result.getColor().getColorId());
+			updateCarRequest.setCityId(result.getCity().getCityId());
 			updateCarRequest.setModelYear(result.getModelYear());
 			updateCarRequest.setDailyPrice(result.getDailyPrice());
 			updateCarRequest.setInRepair(true);
+			updateCarRequest.setMinFindeksScore(result.getMinFindeksScore());
+			updateCarRequest.setDescription(result.getDescription());
+			updateCarRequest.setKm(result.getKm());
+
+			this.carService.update(updateCarRequest);
+			return new SuccessResult();
+		} else {
+			this.carService.getById(carId).getData().setInRepair(false);
+
+			return new ErrorResult();
+		}
+	}
+
+	private Result setInRepairIfFinishDateIsNOTNull(int carId, String repairFinishDate) {
+
+		if (repairFinishDate!=null ) {
+			var result= this.carService.getById(carId).getData();
+			UpdateCarRequest updateCarRequest=new UpdateCarRequest();
+			updateCarRequest.setCarId(result.getCarId());
+			updateCarRequest.setCarName(result.getCarName());
+			updateCarRequest.setBrandId(result.getBrand().getBrandId());
+			updateCarRequest.setColorId(result.getColor().getColorId());
+			updateCarRequest.setCityId(result.getCity().getCityId());
+			updateCarRequest.setModelYear(result.getModelYear());
+			updateCarRequest.setDailyPrice(result.getDailyPrice());
+			updateCarRequest.setInRepair(false);
 			updateCarRequest.setMinFindeksScore(result.getMinFindeksScore());
 			updateCarRequest.setDescription(result.getDescription());
 			updateCarRequest.setKm(result.getKm());

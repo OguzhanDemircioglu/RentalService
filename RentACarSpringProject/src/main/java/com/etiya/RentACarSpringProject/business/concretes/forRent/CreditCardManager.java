@@ -43,13 +43,6 @@ public class CreditCardManager implements CreditCardService {
 	}
 
 	@Override
-	public DataResult<List<CreditCard>> findAll() {
-
-        return new SuccessDataResult<List<CreditCard>>(this.creditCardDao.findAll(),languageWordService.getByLanguageAndKeyId(Messages.CreditCardsListed,Integer.parseInt(environment.getProperty("language"))));
-
-	}
-
-	@Override
 	public DataResult<List<CreditCardDto>> getAll() {
 
 		List<CreditCard> creditCards = this.creditCardDao.findAll();
@@ -57,19 +50,6 @@ public class CreditCardManager implements CreditCardService {
 				.map(creditCard -> modelMapperService.forDto().map(creditCard, CreditCardDto.class))
 				.collect(Collectors.toList());
         return new SuccessDataResult<List<CreditCardDto>>(creditCardsDto,languageWordService.getByLanguageAndKeyId(Messages.CreditCardsListed,Integer.parseInt(environment.getProperty("language"))));
-
-	}
-
-	@Override
-	public DataResult<CreditCard> findById(int creditCardId) {
-
-		var result= BusinessRules.run(checkIfCreditCardIdExists(creditCardId));
-
-		if(result!=null){
-			return  new ErrorDataResult(result);
-		}
-
-        return new SuccessDataResult<CreditCard>(this.creditCardDao.getById(creditCardId),languageWordService.getByLanguageAndKeyId(Messages.GetCreditCard,Integer.parseInt(environment.getProperty("language"))));
 
 	}
 
@@ -85,19 +65,6 @@ public class CreditCardManager implements CreditCardService {
 		CreditCard creditCard = this.creditCardDao.getById(creditCardId);
         return new SuccessDataResult<CreditCardDto>(modelMapperService.forDto().map(creditCard, CreditCardDto.class),languageWordService
         		.getByLanguageAndKeyId(Messages.GetCreditCard,Integer.parseInt(environment.getProperty("language"))));
-
-	}
-
-	@Override
-	public DataResult<List<CreditCard>> findCreditCardsByApplicationUser_UserId(int applicationUserId) {
-
-		var result= BusinessRules.run(this.userService.checkIfUserIdExists(applicationUserId));
-
-		if(result!=null){
-			return  new ErrorDataResult(result);
-		}
-        return new SuccessDataResult<List<CreditCard>>(this.creditCardDao.getCreditCardByApplicationUser_UserId(applicationUserId),languageWordService
-        		.getByLanguageAndKeyId(Messages.CreditCardsOfCustomerListed,Integer.parseInt(environment.getProperty("language"))));
 
 	}
 
@@ -118,7 +85,6 @@ public class CreditCardManager implements CreditCardService {
 					.collect(Collectors.toList());
 
         return new SuccessDataResult<List<CreditCardDto>>(creditCardsDto,languageWordService.getByLanguageAndKeyId(Messages.CreditCardsOfCustomerListed,Integer.parseInt(environment.getProperty("language"))));
-
 
 	}
 
@@ -143,7 +109,6 @@ public class CreditCardManager implements CreditCardService {
 
 	@Override
 	public Result update(UpdateCreditCardRequest updateCreditCardRequest) {
-
 
 		var result = BusinessRules.run(checkCreditCardNumber(updateCreditCardRequest.getCreditCardNumber()),
 				checkCreditCardCvv(updateCreditCardRequest.getCvc()),

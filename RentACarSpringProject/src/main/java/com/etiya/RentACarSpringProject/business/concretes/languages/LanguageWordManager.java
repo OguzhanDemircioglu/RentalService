@@ -7,11 +7,9 @@ import com.etiya.RentACarSpringProject.business.dtos.languages.LanguageWordDto;
 import com.etiya.RentACarSpringProject.business.requests.languages.LanguageWord.CreateLanguageWordRequest;
 import com.etiya.RentACarSpringProject.business.requests.languages.LanguageWord.DeleteLanguageWordRequest;
 import com.etiya.RentACarSpringProject.business.requests.languages.LanguageWord.UpdateLanguageWordRequest;
+import com.etiya.RentACarSpringProject.core.business.BusinessRules;
 import com.etiya.RentACarSpringProject.core.mapping.ModelMapperService;
-import com.etiya.RentACarSpringProject.core.results.DataResult;
-import com.etiya.RentACarSpringProject.core.results.Result;
-import com.etiya.RentACarSpringProject.core.results.SuccessDataResult;
-import com.etiya.RentACarSpringProject.core.results.SuccessResult;
+import com.etiya.RentACarSpringProject.core.results.*;
 import com.etiya.RentACarSpringProject.dataAccess.languages.LanguageWordDao;
 import com.etiya.RentACarSpringProject.entities.languages.LanguageWord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +57,14 @@ public class LanguageWordManager implements LanguageWordService {
     @Override
     public Result save(CreateLanguageWordRequest createLanguageRequest) {
 
+        var result = BusinessRules.run(
+                this.languageService.checkIfLanguageIdExists(createLanguageRequest.getLanguageId()),
+                this.wordService.checkIfLanguageWordIdExists(createLanguageRequest.getWordId()));
+
+        if (result != null) {
+            return result;
+        }
+
         LanguageWord languageWord = modelMapperService.forRequest()
             .map(createLanguageRequest, LanguageWord.class);
         this.languageWordDao.save(languageWord);
@@ -68,6 +74,15 @@ public class LanguageWordManager implements LanguageWordService {
     @Override
     public Result update(UpdateLanguageWordRequest updateLanguageRequest) {
 
+        var result = BusinessRules.run(
+                this.languageService.checkIfLanguageIdExists(updateLanguageRequest.getLanguageId()),
+                this.wordService.checkIfLanguageWordIdExists(updateLanguageRequest.getWordId()),
+                checkIfLanguageWordIdExists(updateLanguageRequest.getId()));
+
+        if (result != null) {
+            return result;
+        }
+
         LanguageWord languageWord = modelMapperService.forRequest()
                 .map(updateLanguageRequest, LanguageWord.class);
         this.languageWordDao.save(languageWord);
@@ -76,6 +91,13 @@ public class LanguageWordManager implements LanguageWordService {
 
     @Override
     public Result delete(DeleteLanguageWordRequest deleteLanguageRequest) {
+
+        var result = BusinessRules.run(checkIfLanguageWordIdExists(deleteLanguageRequest.getId()));
+
+        if (result != null) {
+            return result;
+        }
+
         this.languageWordDao.deleteById(deleteLanguageRequest.getId());
         return new SuccessResult();
     }
@@ -98,4 +120,15 @@ public class LanguageWordManager implements LanguageWordService {
             this.languageId=this.defaultLanguageId;
         }
     }*/
+
+    public Result  checkIfLanguageWordIdExists(int wordId){
+
+        var result=this.languageWordDao.existsById(wordId);
+        if (!result){
+            return new ErrorResult("Kelime getirilemedi");
+
+        }
+        return new SuccessResult();
+    }
+
 }

@@ -40,11 +40,6 @@ public class UserManager implements UserService {
 	}
 
 	@Override
-	public DataResult<List<ApplicationUser>> findAll() {
-		return new SuccessDataResult<List<ApplicationUser>>(this.applicationUserDao.findAll(), Messages.UsersListed);
-	}
-
-	@Override
 	public DataResult<List<ApplicationUserDto>> getAll() {
 		List<ApplicationUser> applicationUsers = this.applicationUserDao.findAll();
 		List<ApplicationUserDto> applicationUsersDto = applicationUsers.stream()
@@ -52,19 +47,6 @@ public class UserManager implements UserService {
 				.collect(Collectors.toList());
 
         return new SuccessDataResult<List<ApplicationUserDto>>(applicationUsersDto ,languageWordService.getByLanguageAndKeyId(Messages.UsersListed,Integer.parseInt(environment.getProperty("language"))));
-
-	}
-
-	@Override
-	public DataResult<ApplicationUser> findById(int applicationUserId) {
-
-		var result=BusinessRules.run(checkIfUserIdExists(applicationUserId));
-
-		if(result!=null){
-			return  new ErrorDataResult(result);
-		}
-
-        return new SuccessDataResult<ApplicationUser>(this.applicationUserDao.getById(applicationUserId), languageWordService.getByLanguageAndKeyId(Messages.GetUser,Integer.parseInt(environment.getProperty("language"))));
 
 	}
 

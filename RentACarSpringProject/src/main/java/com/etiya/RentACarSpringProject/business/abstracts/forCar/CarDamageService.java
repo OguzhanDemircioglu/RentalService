@@ -11,13 +11,9 @@ import com.etiya.RentACarSpringProject.core.results.Result;
 import com.etiya.RentACarSpringProject.entities.CarDamage;
 
 public interface CarDamageService {
-	
-	DataResult<List<CarDamage>> findAll();
-	
+
 	DataResult<List<CarDamageDto>> getAll();
-	
-	DataResult<List<CarDamage>> findByCarId(int carId);
-	
+
 	DataResult<List<CarDamageDto>> getByCarId(int carId);
 
 	Result add(CreateCarDamageRequest createCarDamageRequest);

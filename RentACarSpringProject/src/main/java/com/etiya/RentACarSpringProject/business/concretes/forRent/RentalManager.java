@@ -88,12 +88,6 @@ public class RentalManager implements RentalService {
 	}
 
 	@Override
-	public DataResult<List<Rental>> findAll() {
-        return new SuccessDataResult<List<Rental>>(this.rentalDao.findAll(), languageWordService.getByLanguageAndKeyId(Messages.RentalsListed,Integer.parseInt(environment.getProperty("language"))));
-
-	}
-
-	@Override
 	public DataResult<List<RentalDto>> getAll() {
 		List<Rental> rentals = this.rentalDao.findAll();
 		List<RentalDto> rentalsDto = rentals.stream().map(brand -> modelMapperService.forDto().map(brand, RentalDto.class))
@@ -134,19 +128,6 @@ public class RentalManager implements RentalService {
 		this.saveCreditCard(createRentalRequest, createCreditCardRequest);
 
         return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.RentalAdded,Integer.parseInt(environment.getProperty("language"))));
-
-	}
-
-	@Override
-	public DataResult<Rental> findById(int rentalId) {
-
-		var result=BusinessRules.run(checkIfRentalIdExists(rentalId));
-
-		if(result!=null){
-			return  new ErrorDataResult(result);
-		}
-
-        return new SuccessDataResult<Rental>(rentalDao.getById(rentalId),languageWordService.getByLanguageAndKeyId(Messages.GetRental,Integer.parseInt(environment.getProperty("language"))));
 
 	}
 
@@ -251,7 +232,7 @@ public class RentalManager implements RentalService {
 
 	private Result checkRentCityByCarCity(CreateRentalRequest createRentalRequest) {
 		int rentCity = createRentalRequest.getRentCityId();
-		int carCity = this.carService.getById(createRentalRequest.getCarId()).getData().getCityId();
+		int carCity = this.carService.getById(createRentalRequest.getCarId()).getData().getCity().getCityId();
 		if (rentCity!=carCity) {
 	        return new ErrorResult(languageWordService.getByLanguageAndKeyId(Messages.CarIsInDiffirentCity,Integer.parseInt(environment.getProperty("language"))));
 
@@ -371,7 +352,7 @@ public Result checkPosService(CreateCreditCardRequest createCreditCardRequest, C
 		int rentCity = createRentalRequest.getRentCityId();
 
 		if (returnCity!=rentCity) {
-			this.carService.findById(createRentalRequest.getCarId()).getData().getCity();
+			this.carService.getById(createRentalRequest.getCarId()).getData().getCity();
 			return new SuccessResult("true");
 		}
 		return new ErrorResult("false");
@@ -379,7 +360,7 @@ public Result checkPosService(CreateCreditCardRequest createCreditCardRequest, C
 
 	private Result setCarReturnKm(CreateRentalRequest createRentalRequest) {
 
-		Car car = this.carService.findById(createRentalRequest.getCarId()).getData();
+		Car car = this.carService.getById(createRentalRequest.getCarId()).getData();
 
 		if (createRentalRequest.getReturnKm() > createRentalRequest.getRentKm()) {
 			car.setKm(createRentalRequest.getReturnKm());

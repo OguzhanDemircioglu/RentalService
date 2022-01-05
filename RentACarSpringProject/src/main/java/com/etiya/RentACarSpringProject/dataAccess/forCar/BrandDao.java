@@ -7,4 +7,5 @@ import com.etiya.RentACarSpringProject.entities.Brand;
 public interface BrandDao extends JpaRepository<Brand, Integer>{
 	
 	boolean existsByBrandName(String brandName);
+
 }

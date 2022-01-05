@@ -40,13 +40,6 @@ public class CarDamageManager implements CarDamageService {
 	}
 
 	@Override
-	public DataResult<List<CarDamage>> findAll() {
-
-        return new SuccessDataResult<List<CarDamage>>(this.carDamageDao.findAll(),languageWordService.getByLanguageAndKeyId(Messages.DamageRecordsListed,Integer.parseInt(environment.getProperty("language"))));
-
-	}
-	
-	@Override
 	public DataResult<List<CarDamageDto>> getAll() {
 		
 		List<CarDamage> carDamages = this.carDamageDao.findAll();
@@ -60,20 +53,6 @@ public class CarDamageManager implements CarDamageService {
 
 	}
 
-	@Override
-	public DataResult<List<CarDamage>> findByCarId(int carId) {
-
-		var result = BusinessRules.run(checkIfCarIdExists(carId));
-
-		if(result!=null){
-			return new ErrorDataResult(result);
-		}
-
-
-        return new SuccessDataResult<List<CarDamage>>(this.carDamageDao.getByCar_CarId(carId), languageWordService.getByLanguageAndKeyId(Messages.GetDamageRecordByCarId,Integer.parseInt(environment.getProperty("language"))));
-
-	}
-	
 	@Override
 	public DataResult<List<CarDamageDto>> getByCarId(int carId) {
 

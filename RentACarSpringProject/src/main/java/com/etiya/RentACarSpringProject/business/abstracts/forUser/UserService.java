@@ -11,13 +11,9 @@ import com.etiya.RentACarSpringProject.core.results.Result;
 import com.etiya.RentACarSpringProject.entities.ApplicationUser;
 
 public interface UserService {
-	
-	DataResult<List<ApplicationUser>> findAll();
-	
+
 	DataResult<List<ApplicationUserDto>> getAll();
-	
-	DataResult<ApplicationUser> findById(int applicationUserId);
-	
+
 	DataResult<ApplicationUserDto> getById(int applicationUserId);
 	
 	DataResult<List<String>> findAllEmail();

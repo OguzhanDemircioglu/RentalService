@@ -12,11 +12,8 @@ import com.etiya.RentACarSpringProject.entities.AdditionalService;
 
 public interface AdditionalServiceService {
 
-	DataResult<List<AdditionalService>> findAll();
-
 	DataResult<List<AdditionalServiceDto>> getAll();
-
-	DataResult<AdditionalService> findById(int additionalServiceId);
+	DataResult<List<AdditionalService>> findAll();
 
 	DataResult<AdditionalServiceDto> getById(int additionalServiceId);
 

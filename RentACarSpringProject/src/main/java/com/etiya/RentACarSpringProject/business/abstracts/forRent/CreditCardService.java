@@ -11,16 +11,10 @@ import com.etiya.RentACarSpringProject.core.results.Result;
 import com.etiya.RentACarSpringProject.entities.CreditCard;
 
 public interface CreditCardService {
-	
-	DataResult<List<CreditCard>> findAll();
 
 	DataResult<List<CreditCardDto>> getAll();
 
-	DataResult<CreditCard> findById(int cardInformationId); 
-
 	DataResult<CreditCardDto> getById(int cardInformationId); 
-	
-	DataResult<List<CreditCard>> findCreditCardsByApplicationUser_UserId(int applicationUserId);
 
 	DataResult<List<CreditCardDto>> getCreditCardsByApplicationUser_UserId(int applicationUserId);
 

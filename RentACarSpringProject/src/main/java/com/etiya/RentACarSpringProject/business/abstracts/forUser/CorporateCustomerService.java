@@ -11,12 +11,8 @@ import com.etiya.RentACarSpringProject.core.results.Result;
 import com.etiya.RentACarSpringProject.entities.CorporateCustomer;
 
 public interface CorporateCustomerService {
-	
-	DataResult<List<CorporateCustomer>> findAll();
-	
-	DataResult<List<CorporateCustomerDto>> getAll();
 
-	DataResult<CorporateCustomer> findById(int corporateCustomerId);
+	DataResult<List<CorporateCustomerDto>> getAll();
 
 	DataResult<CorporateCustomerDto> getById(int corporateCustomerId);
 

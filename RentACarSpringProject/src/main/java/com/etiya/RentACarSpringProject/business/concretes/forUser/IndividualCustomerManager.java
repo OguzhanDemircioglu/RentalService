@@ -38,12 +38,6 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 	}
 
 	@Override
-	public DataResult<List<IndividualCustomer>> findAll() {
-        return new SuccessDataResult<List<IndividualCustomer>>(this.individualCustomerDao.findAll(), languageWordService.getByLanguageAndKeyId(Messages.IndividualCustomerListed,Integer.parseInt(environment.getProperty("language"))));
-
-	}
-
-	@Override
 	public DataResult<List<IndividualCustomerDto>> getAll() {
 		List<IndividualCustomer> individualCustomers = this.individualCustomerDao.findAll();
 		List<IndividualCustomerDto> individualCustomersDto = new ArrayList<IndividualCustomerDto>();
@@ -55,19 +49,6 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 			individualCustomersDto.add(mappedIndividualCustomer);
 		}
         return new SuccessDataResult<List<IndividualCustomerDto>>(individualCustomersDto, languageWordService.getByLanguageAndKeyId(Messages.IndividualCustomerListed,Integer.parseInt(environment.getProperty("language"))));
-
-	}
-
-	@Override
-	public DataResult<IndividualCustomer> findById(int individualCustomerId) {
-
-		var result= BusinessRules.run(checkIfIndividualCustomerIdExists(individualCustomerId));
-
-		if(result!=null){
-			return  new ErrorDataResult(result);
-		}
-
-        return new SuccessDataResult<IndividualCustomer>(this.individualCustomerDao.getById(individualCustomerId),languageWordService.getByLanguageAndKeyId(Messages.GetIndividualCustomer,Integer.parseInt(environment.getProperty("language"))));
 
 	}
 

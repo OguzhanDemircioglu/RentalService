@@ -11,12 +11,8 @@ import com.etiya.RentACarSpringProject.entities.Color;
 
 public interface ColorService {
 
-	DataResult<List<Color>> findAll();
-
 	DataResult<List<ColorDto>> getAll();
 
-	DataResult<Color> findById(int colorId);
-	
 	DataResult<ColorDto> getById(int colorId);
 
 	Result add(CreateColorRequest createColorRequest);
@@ -24,6 +20,7 @@ public interface ColorService {
 	Result update(UpdateColorRequest updateColorRequest);
 
 	Result delete(DeleteColorRequest deleteColorRequest);
-	public Result  checkIfColorIdExists(int colorId);
+
+	Result  checkIfColorIdExists(int colorId);
 
 }

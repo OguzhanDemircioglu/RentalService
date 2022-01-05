@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,11 +18,11 @@ public class CreateRepairRequest {
 	@JsonIgnore
 	private int repairId;
 
-	@NotNull
+	@JsonIgnore
 	private String repairStartDate;
 
 	@JsonIgnore
-	private String repairFinishDate=null;
+	private String repairFinishDate;
 	
 	@NotNull
 	private int carId;

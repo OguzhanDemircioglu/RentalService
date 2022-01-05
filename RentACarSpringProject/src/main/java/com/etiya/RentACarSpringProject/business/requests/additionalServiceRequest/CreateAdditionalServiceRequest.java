@@ -1,5 +1,6 @@
 package com.etiya.RentACarSpringProject.business.requests.additionalServiceRequest;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -24,6 +25,7 @@ public class CreateAdditionalServiceRequest {
 	@NotNull
 	private String details;
 
+	@Min(10)
 	@NotNull
 	private int price;
 

@@ -39,7 +39,6 @@ public class InvoiceManager implements InvoiceService {
 	private ModelMapperService modelMapperService;
 	private Environment environment;
 	private LanguageWordService languageWordService;
-	
 
 	@Autowired
 	public InvoiceManager(InvoiceDao invoiceDao, CarService carService, AdditionalServiceService additionalServiceService,
@@ -53,14 +52,6 @@ public class InvoiceManager implements InvoiceService {
 		this.languageWordService=languageWordService;
 	}
 
-
-
-	@Override
-	public DataResult<List<Invoice>> findAll() {
-        return new SuccessDataResult<List<Invoice>>(this.invoiceDao.findAll(),languageWordService.getByLanguageAndKeyId(Messages.InvoicesListed,Integer.parseInt(environment.getProperty("language"))));
-
-	}
-
 	@Override
 	public DataResult<List<InvoiceDto>> getAll() {
 		List<Invoice> invoices = this.invoiceDao.findAll();
@@ -68,19 +59,6 @@ public class InvoiceManager implements InvoiceService {
 				.collect(Collectors.toList());
 
         return new SuccessDataResult<List<InvoiceDto>>(invoicesDto, languageWordService.getByLanguageAndKeyId(Messages.InvoicesListed,Integer.parseInt(environment.getProperty("language"))));
-
-	}
-
-	@Override
-	public DataResult<Invoice> findById(int invoiceId) {
-
-		var result= BusinessRules.run(checkIfInvoiceIdExists(invoiceId));
-
-		if(result!=null){
-			return  new ErrorDataResult(result);
-		}
-
-        return new SuccessDataResult<Invoice>(this.invoiceDao.getById(invoiceId),languageWordService.getByLanguageAndKeyId(Messages.GetInvoice,Integer.parseInt(environment.getProperty("language"))));
 
 	}
 

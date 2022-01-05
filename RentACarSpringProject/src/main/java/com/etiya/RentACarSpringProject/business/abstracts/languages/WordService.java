@@ -19,4 +19,5 @@ public interface WordService {
     Result delete( DeleteWordRequest deleteWordRequest);
     Result checkWordIdExists(int wordId);
     Result checkKeyExists(String key);
+    Result  checkIfLanguageWordIdExists(int wordId);
 }

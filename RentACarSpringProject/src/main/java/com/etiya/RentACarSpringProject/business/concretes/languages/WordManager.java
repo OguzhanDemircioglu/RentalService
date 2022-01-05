@@ -2,16 +2,14 @@ package com.etiya.RentACarSpringProject.business.concretes.languages;
 
 import com.etiya.RentACarSpringProject.business.abstracts.languages.LanguageWordService;
 import com.etiya.RentACarSpringProject.business.abstracts.languages.WordService;
+import com.etiya.RentACarSpringProject.business.constants.Messages;
 import com.etiya.RentACarSpringProject.business.dtos.languages.WordDto;
 import com.etiya.RentACarSpringProject.business.requests.languages.Word.CreateWordRequest;
 import com.etiya.RentACarSpringProject.business.requests.languages.Word.DeleteWordRequest;
 import com.etiya.RentACarSpringProject.business.requests.languages.Word.UpdateWordRequest;
+import com.etiya.RentACarSpringProject.core.business.BusinessRules;
 import com.etiya.RentACarSpringProject.core.mapping.ModelMapperService;
-import com.etiya.RentACarSpringProject.core.results.DataResult;
-import com.etiya.RentACarSpringProject.core.results.ErrorResult;
-import com.etiya.RentACarSpringProject.core.results.Result;
-import com.etiya.RentACarSpringProject.core.results.SuccessDataResult;
-import com.etiya.RentACarSpringProject.core.results.SuccessResult;
+import com.etiya.RentACarSpringProject.core.results.*;
 import com.etiya.RentACarSpringProject.dataAccess.languages.WordDao;
 import com.etiya.RentACarSpringProject.entities.languages.Word;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +58,13 @@ public class WordManager implements WordService {
 
     @Override
     public Result update(@Valid UpdateWordRequest updateWordRequest) {
+
+        var result = BusinessRules.run(checkIfLanguageWordIdExists(updateWordRequest.getWordId()));
+
+        if (result != null) {
+            return result;
+        }
+
         Word word = modelMapperService.forRequest().map(updateWordRequest, Word.class);
         this.wordDao.save(word);
         return new SuccessResult();
@@ -67,6 +72,13 @@ public class WordManager implements WordService {
 
     @Override
     public Result delete(@Valid DeleteWordRequest deleteWordRequest) {
+
+        var result = BusinessRules.run(checkIfLanguageWordIdExists(deleteWordRequest.getWordId()));
+
+        if (result != null) {
+            return result;
+        }
+
         this.wordDao.deleteById(deleteWordRequest.getWordId());
         return new SuccessResult();
     }
@@ -90,8 +102,21 @@ public class WordManager implements WordService {
     private Result ifKeyDuplicated(String key){
         Word word = this.wordDao.getByKey(key);
         if (word != null){
-            return new ErrorResult();
+            return new ErrorResult("Bu kelimeden mevcut");
         }
         return new SuccessResult();
     }
+
+
+    public Result  checkIfLanguageWordIdExists(int wordId){
+
+        var result=this.wordDao.existsById(wordId);
+        if (!result){
+            return new ErrorResult(languageWordService.getByLanguageAndKeyId("Böyle bir kelime yok",Integer.parseInt(environment.getProperty("language"))));
+
+        }
+        return new SuccessResult();
+    }
+
+
 }

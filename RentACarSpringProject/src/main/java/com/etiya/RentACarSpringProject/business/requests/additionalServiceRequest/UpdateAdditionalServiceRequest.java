@@ -1,5 +1,6 @@
 package com.etiya.RentACarSpringProject.business.requests.additionalServiceRequest;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 import com.sun.istack.NotNull;
@@ -23,6 +24,7 @@ public class UpdateAdditionalServiceRequest {
 	@NotNull
 	private String details;
 
+	@Min(10)
 	@NotNull
 	private int price;
 }

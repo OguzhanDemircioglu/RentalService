@@ -30,7 +30,6 @@ public class ColorManager implements ColorService {
 	private Environment environment;
 	private LanguageWordService languageWordService;
 
-
 	@Autowired
 	public ColorManager(ColorDao colorDao, ModelMapperService modelMapperService, Environment environment, LanguageWordService languageWordService) {
 		super();
@@ -41,30 +40,11 @@ public class ColorManager implements ColorService {
 	}
 
 	@Override
-	public DataResult<List<Color>> findAll() {
-        return new SuccessDataResult<List<Color>>(this.colorDao.findAll(),languageWordService.getByLanguageAndKeyId(Messages.ColorsListed,Integer.parseInt(environment.getProperty("language"))));
-
-	}
-
-	@Override
 	public DataResult<List<ColorDto>> getAll() {
 		List<Color> colors = this.colorDao.findAll();
 		List<ColorDto> colorsDto = colors.stream().map(color -> modelMapperService.forDto().map(color, ColorDto.class))
 				.collect(Collectors.toList());
         return new SuccessDataResult<List<ColorDto>>(colorsDto,languageWordService.getByLanguageAndKeyId(Messages.ColorsListed,Integer.parseInt(environment.getProperty("language"))));
-
-	}
-
-	@Override
-	public DataResult<Color> findById(int colorId) {
-
-		var result = BusinessRules.run(checkIfColorIdExists(colorId));
-
-		if (result != null) {
-			return new ErrorDataResult(result);
-		}
-
-        return new SuccessDataResult<Color>(this.colorDao.getById(colorId),languageWordService.getByLanguageAndKeyId(Messages.GetColor,Integer.parseInt(environment.getProperty("language"))));
 
 	}
 
@@ -95,7 +75,6 @@ public class ColorManager implements ColorService {
 
 		this.colorDao.save(color);
         return new SuccessResult(languageWordService.getByLanguageAndKeyId(Messages.ColorAdded,Integer.parseInt(environment.getProperty("language"))));
-
 
 	}
 

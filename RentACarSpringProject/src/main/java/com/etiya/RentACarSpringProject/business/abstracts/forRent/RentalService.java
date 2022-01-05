@@ -13,13 +13,9 @@ import com.etiya.RentACarSpringProject.core.results.Result;
 import com.etiya.RentACarSpringProject.entities.Rental;
 
 public interface RentalService {
-	
-	DataResult<List<Rental>> findAll();
-	
+
 	DataResult<List<RentalDto>> getAll();
 
-	DataResult<Rental> findById(int rentalId);
-	
 	DataResult<RentalDto> getById(int rentalId);
 	
 	Result existsByUserId(int applicationUserId);
@@ -30,7 +26,6 @@ public interface RentalService {
 
 	Result delete(DeleteRentalRequest deleteRentalRequest);
 	
-	DataResult<CreateInvoiceRequest> createRentalInvoiceRequest(CreateRentalRequest createRentalRequest, Rental rental);
-	Result checkPosService(CreateCreditCardRequest createCreditCardRequest, CreateRentalRequest createRentalRequest) ;
+	//DataResult<CreateInvoiceRequest> createRentalInvoiceRequest(CreateRentalRequest createRentalRequest, Rental rental);
 
 }

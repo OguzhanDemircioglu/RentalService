@@ -11,8 +11,6 @@ import com.etiya.RentACarSpringProject.core.results.Result;
 import com.etiya.RentACarSpringProject.entities.Repair;
 
 public interface RepairService {
-	
-	DataResult<List<Repair>> findAll();
 
 	DataResult<List<RepairDto>> getAll();
 	
